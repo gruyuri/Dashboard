@@ -6,7 +6,9 @@ namespace DashboardWpf.Core.Models
 {
     public class ModuleUI
     {
-        public string Name { get; set; }
+        public string DisplayName { get; set; }
+
+        public string ModuleName { get; set; }
 
         public List<ModuleUI> Items { get; set; } = new List<ModuleUI>();
     }

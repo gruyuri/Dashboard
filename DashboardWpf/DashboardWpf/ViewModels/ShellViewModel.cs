@@ -1,5 +1,7 @@
 ﻿using DashboardWpf.Core;
+using DashboardWpf.Core.Events;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
@@ -12,11 +14,18 @@ namespace DashboardWpf.ViewModels
     {
         private readonly IRegionManager _regionManager;
 
-        public ShellViewModel(IRegionManager regionManager)
+        public ShellViewModel(IRegionManager regionManager, IEventAggregator eventAggregator)
         {
             _regionManager = regionManager;
 
+            eventAggregator.GetEvent<ModuleSelected>().Subscribe(OnModuleSelected);
+
             Initialize();
+        }
+
+        private void OnModuleSelected(string moduleName)
+        {
+            _regionManager.RequestNavigate(RegionNames.CONTENT_REGION, moduleName);
         }
 
         private void Initialize()

@@ -1,4 +1,5 @@
-﻿using DashboardWpf.Core.Models;
+﻿using DashboardWpf.Core;
+using DashboardWpf.Core.Models;
 using DashboardWpf.Services.Interfaces;
 using System.Collections.Generic;
 
@@ -12,37 +13,37 @@ namespace DashboardWpf.Services
 
             list.Add(new ModuleUI()
             {
-                Name = "TKB",
+                DisplayName = "TKB",
                 Items = new List<ModuleUI>()
                 {
-                    new ModuleUI() { Name = "Tour-Stammdaten" },
-                    new ModuleUI() { Name = "Tour-Disposition" }
+                    new ModuleUI() { DisplayName = "Tour-Stammdaten", ModuleName = ModuleNames.TKB_TOUR_STAMMDATEN },
+                    new ModuleUI() { DisplayName = "Tour-Disposition", ModuleName = ModuleNames.TKB_DISPOSITION_VIEW }
                 }
             });
 
             list.Add(new ModuleUI()
             {
-                Name = "Module A",
+                DisplayName = "Module A",
                 Items = new List<ModuleUI>()
                 {
-                    new ModuleUI() { Name = "Module A - SubItem 01" },
-                    new ModuleUI() { Name = "Module A - SubItem 02" },
-                    new ModuleUI() { Name = "Module A - SubItem 03" }
+                    new ModuleUI() { DisplayName = "Module A - SubItem 01" },
+                    new ModuleUI() { DisplayName = "Module A - SubItem 02" },
+                    new ModuleUI() { DisplayName = "Module A - SubItem 03" }
                 }
             });
 
             list.Add(new ModuleUI()
             {
-                Name = "Module B",
+                DisplayName = "Module B",
                 Items = new List<ModuleUI>()
                 {
-                    new ModuleUI() { Name = "Module B - xxxx 1" },
-                    new ModuleUI() { Name = "Module B - xxxx 2" },
-                    new ModuleUI() { Name = "Module B - xxxx 3" },
-                    new ModuleUI() { Name = "Module B - xxxx 4" },
-                    new ModuleUI() { Name = "Module B - xxxx 5" },
-                    new ModuleUI() { Name = "Module B - xxxx 6" },
-                    new ModuleUI() { Name = "Module B - xxxx 7" }
+                    new ModuleUI() { DisplayName = "Module B - xxxx 1" },
+                    new ModuleUI() { DisplayName = "Module B - xxxx 2" },
+                    new ModuleUI() { DisplayName = "Module B - xxxx 3" },
+                    new ModuleUI() { DisplayName = "Module B - xxxx 4" },
+                    new ModuleUI() { DisplayName = "Module B - xxxx 5" },
+                    new ModuleUI() { DisplayName = "Module B - xxxx 6" },
+                    new ModuleUI() { DisplayName = "Module B - xxxx 7" }
                 }
             });
 

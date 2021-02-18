@@ -11,5 +11,6 @@ namespace DashboardWpf.Views
         {
             InitializeComponent();
         }
+
     }
 }

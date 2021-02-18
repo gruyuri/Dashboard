@@ -5,6 +5,7 @@
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True"
             Title="Dashboard Zustellung" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen"
         >
     <Grid Background="#FFD6D6D6">
         <Grid.ColumnDefinitions>
