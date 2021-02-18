@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="DashboardWpf.Views.NavigationMenuView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:core="clr-namespace:DashboardWpf.Core;assembly=DashboardWpf.Core"
+             xmlns:model="clr-namespace:DashboardWpf.Core.Models;assembly=DashboardWpf.Core"
+             xmlns:prism="http://prismlibrary.com/"             
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <Grid x:Name="sidePanel" Background="#FF0F4E7A" HorizontalAlignment="Left">
+        <TreeView ItemsSource="{Binding ModuleItems}" 
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                  FontFamily="Century Gothic" 
+                  FontSize="14" Foreground="White" BorderBrush="Transparent" 
+                  Background="Transparent" FontWeight="Bold">
+            <TreeView.Resources>
+                <HierarchicalDataTemplate DataType="{x:Type model:ModuleUI}" ItemsSource="{Binding Path=Items}">
+                    <TextBlock Text="{Binding Path=Name}" Foreground="White" />
+                </HierarchicalDataTemplate>
+            </TreeView.Resources>
+        </TreeView>
+    </Grid>
+</UserControl>

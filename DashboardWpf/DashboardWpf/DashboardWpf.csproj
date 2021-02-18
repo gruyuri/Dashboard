@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>DashboardWpf</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Prism.Unity" Version="8.0.0.1909" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DashboardWpf.Core\DashboardWpf.Core.csproj" />
+    <ProjectReference Include="..\Modules\DashboardWpf.Modules.ModuleName\DashboardWpf.Modules.TKB.csproj" />
+    <ProjectReference Include="..\Services\DashboardWpf.Services.Interfaces\DashboardWpf.Services.Interfaces.csproj" />
+    <ProjectReference Include="..\Services\DashboardWpf.Services\DashboardWpf.Services.csproj" />
+  </ItemGroup>
+</Project>
