@@ -3,6 +3,7 @@ using Moq;
 using Prism.Regions;
 using Xunit;
 
+
 namespace DashboardWpf.Modules.ModuleName.Tests.ViewModels
 {
     public class ViewAViewModelFixture
