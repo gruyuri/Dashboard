@@ -1,5 +1,4 @@
-﻿using DashboardWpf.Modules.ModuleName.ViewModels;
-using DashboardWpf.Services.Interfaces;
+﻿using DashboardWpf.Services.Interfaces;
 using Moq;
 using Prism.Regions;
 using Xunit;
