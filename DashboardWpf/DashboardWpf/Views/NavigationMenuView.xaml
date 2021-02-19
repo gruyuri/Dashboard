@@ -11,14 +11,12 @@
                   FontFamily="Century Gothic" 
                   FontSize="14" Foreground="White" BorderBrush="Transparent" 
                   Background="Transparent" FontWeight="Bold"
+                  SelectedItemChanged="OnSelectedItemChanged"
                   >
             <TreeView.Resources>
-                <HierarchicalDataTemplate DataType="{x:Type model:ModuleUI}" ItemsSource="{Binding Path=Items}">
-                    <Button Background="#FF0F4E7A" Foreground="White" BorderThickness="0"
-                            Command="{Binding NavigateCommand}" CommandParameter="{Binding Path=ModuleName}"
-                            >
+                <HierarchicalDataTemplate DataType="{x:Type model:ModuleUI}" ItemsSource="{Binding Path=Items}"
+                                          >
                         <TextBlock Text="{Binding Path=DisplayName}" Foreground="White"/>
-                    </Button>
                 </HierarchicalDataTemplate>
             </TreeView.Resources>
         </TreeView>
