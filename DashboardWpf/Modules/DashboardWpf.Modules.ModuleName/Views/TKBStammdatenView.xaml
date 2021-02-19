@@ -3,10 +3,35 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True">
-    <Grid>
-        <TextBlock Text="{Binding Message}"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   FontSize="24"/>
-    </Grid>
+ <DataGrid Name="dgTours" AutoGenerateColumns="False" SelectionMode="Single" 
+              CanUserAddRows="false" CanUserDeleteRows="False" SelectionUnit="FullRow"
+           ItemsSource="{Binding Tours}">
+        <DataGrid.CellStyle>
+            <Style TargetType="DataGridCell">
+                <Setter Property="BorderThickness" Value="0"/>
+            </Style>
+        </DataGrid.CellStyle>
+
+        <!--DataGrid.RowHeaderTemplate>
+            <DataTemplate>
+                <Expander Expanded="Expander_Expanded" Collapsed="Expander_Collapsed">
+
+                </Expander>
+            </DataTemplate>
+        </-->
+
+        <DataGrid.Columns>
+            <DataGridTextColumn Header="Tour" IsReadOnly="True" Width="40" Binding="{Binding Name}" />
+            <DataGridTextColumn Header="Status" IsReadOnly="True" Width="45" Binding="{Binding Status}" />
+            <DataGridTextColumn Header="Zusteller" IsReadOnly="True" Width="100" Binding="{Binding MainEmployee}" />
+            <DataGridTextColumn Header="Fakt H" IsReadOnly="True" Width="45" Binding="{Binding FactH}" />
+            <DataGridTextColumn Header="Soll H" IsReadOnly="True" Width="45" Binding="{Binding PlanH}" />
+        </DataGrid.Columns>
+
+        <!--DataGrid.RowDetailsTemplate>
+            <DataTemplate>
+                <TextBlock Text="{Binding Isi}" Margin="10,5,0,0" />
+            </DataTemplate>
+        </-->
+    </DataGrid>
 </UserControl>

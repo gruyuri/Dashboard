@@ -21,6 +21,7 @@ namespace DashboardWpf
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterSingleton<IModuleService, ModuleService>();
+            containerRegistry.RegisterSingleton<IDepoService, DepoService>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
