@@ -4,6 +4,7 @@ using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace DashboardWpf.Modules.TKB.ViewModels
@@ -15,12 +16,12 @@ namespace DashboardWpf.Modules.TKB.ViewModels
         {
             dataService = depoService;
 
-            Tours = dataService.GetDepoTours(string.Empty);
+            Tours = new ObservableCollection<Tour>(dataService.GetDepoTours(string.Empty, SelectedDate));
             Employees = dataService.GetDepoEmployees(string.Empty);
         }
-        private IList<Tour> _tours;
+        private ObservableCollection<Tour> _tours;
 
-        public IList<Tour> Tours
+        public ObservableCollection<Tour> Tours
         {
             get => _tours;
             set => SetProperty(ref _tours, value);
@@ -34,5 +35,21 @@ namespace DashboardWpf.Modules.TKB.ViewModels
             set => SetProperty(ref _employees, value);
         }
 
+        private DateTime _selectedDate = DateTime.Today;
+
+        public DateTime SelectedDate
+        {
+            get => _selectedDate;
+            set 
+            { 
+                SetProperty(ref _selectedDate, value);
+                ReloadTours();
+            }
+        }
+
+        private void ReloadTours()
+        {
+            Tours = new ObservableCollection<Tour>(dataService.GetDepoTours(string.Empty, SelectedDate));
+        }
     }
 }

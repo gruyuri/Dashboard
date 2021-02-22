@@ -3,35 +3,71 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True">
- <DataGrid Name="dgTours" AutoGenerateColumns="False" SelectionMode="Single" 
-              CanUserAddRows="false" CanUserDeleteRows="False" SelectionUnit="FullRow"
+    <Grid Background="LightBlue">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="5" DockPanel.Dock="Top">
+            <TextBlock Text="Gultig ab:" Margin="2, 3, 5, 0" />
+            <DatePicker SelectedDate="{Binding SelectedDate}" />
+        </StackPanel>
+                    
+        
+        <DataGrid Grid.Row="1" Name="dgTours" Margin="5"
+                  AutoGenerateColumns="False" AlternatingRowBackground="Azure"
+              CanUserAddRows="false" CanUserDeleteRows="False" 
+                  BorderThickness="1"
            ItemsSource="{Binding Tours}">
-        <DataGrid.CellStyle>
-            <Style TargetType="DataGridCell">
-                <Setter Property="BorderThickness" Value="0"/>
-            </Style>
-        </DataGrid.CellStyle>
+            <DataGrid.CellStyle>
+                <Style TargetType="DataGridCell">
+                    <Setter Property="BorderThickness" Value="0"/>
+                </Style>
+            </DataGrid.CellStyle>
 
-        <!--DataGrid.RowHeaderTemplate>
-            <DataTemplate>
-                <Expander Expanded="Expander_Expanded" Collapsed="Expander_Collapsed">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Expander Expanded="OnExpanded" Collapsed="OnExpanded">
+                            </Expander>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Tour" IsReadOnly="True" Width="40" Binding="{Binding Name}" />
+                <DataGridTextColumn Header="Status" IsReadOnly="True" Width="60" Binding="{Binding Status}" />
+                <DataGridTextColumn Header="Zusteller" IsReadOnly="True" Width="*" Binding="{Binding MainEmployee}" />
+                <DataGridTextColumn Header="Fakt H" IsReadOnly="False" Width="45" Binding="{Binding FactH}" />
+                <DataGridTextColumn Header="Soll H" IsReadOnly="False" Width="45" Binding="{Binding PlanH}" />
+            </DataGrid.Columns>
 
-                </Expander>
-            </DataTemplate>
-        </-->
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <DockPanel Background="White">
+                        <DataGrid Margin="60,10" AutoGenerateColumns="False"
+                                  CanUserAddRows="false" CanUserDeleteRows="False" 
+                                    BorderThickness="1"
+                                  AlternatingRowBackground="LightSalmon"
+                                  ItemsSource="{Binding Boxes}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Fach" IsReadOnly="True" Width="60" Binding="{Binding BoxNumber}" />
+                                <DataGridTextColumn Header="Mitarbeiter" IsReadOnly="False" Width="auto" Binding="{Binding Employee.Name}" />
+                            </DataGrid.Columns>
 
-        <DataGrid.Columns>
-            <DataGridTextColumn Header="Tour" IsReadOnly="True" Width="40" Binding="{Binding Name}" />
-            <DataGridTextColumn Header="Status" IsReadOnly="True" Width="45" Binding="{Binding Status}" />
-            <DataGridTextColumn Header="Zusteller" IsReadOnly="True" Width="100" Binding="{Binding MainEmployee}" />
-            <DataGridTextColumn Header="Fakt H" IsReadOnly="True" Width="45" Binding="{Binding FactH}" />
-            <DataGridTextColumn Header="Soll H" IsReadOnly="True" Width="45" Binding="{Binding PlanH}" />
-        </DataGrid.Columns>
+                        </DataGrid>
+                    </DockPanel>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
 
-        <!--DataGrid.RowDetailsTemplate>
-            <DataTemplate>
-                <TextBlock Text="{Binding Isi}" Margin="10,5,0,0" />
-            </DataTemplate>
-        </-->
-    </DataGrid>
+        </DataGrid>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2" 
+                    DockPanel.Dock="Bottom"
+                    Margin="5" FlowDirection="RightToLeft">
+            <Button Content="Cancel" Margin="5"/>
+            <Button Content="OK" Margin="5"/>
+        </StackPanel>
+    </Grid>
 </UserControl>

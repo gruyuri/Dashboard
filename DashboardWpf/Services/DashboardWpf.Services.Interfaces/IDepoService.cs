@@ -7,7 +7,7 @@ namespace DashboardWpf.Services.Interfaces
 {
     public interface IDepoService
     {
-        public IList<Tour> GetDepoTours(string depoCode);
+        public IList<Tour> GetDepoTours(string depoCode, DateTime date);
 
         public IList<Employee> GetDepoEmployees(string depoCode);
     }

@@ -13,13 +13,17 @@ namespace DashboardWpf.Services
             return DemoEmployees();
         }
 
-        public IList<Tour> GetDepoTours(string depoCode)
+        public IList<Tour> GetDepoTours(string depoCode, DateTime date)
         {
             var result = new List<Tour>();
             var employees = DemoEmployees().ToArray();
 
+            if (date.DayOfWeek == DayOfWeek.Sunday)
+                return result;
+
             Tour komplettTour1 = new Tour()
             {
+                Date = date,
                 Name = "001",
                 FactH = 6,
                 PlanH = 8,
@@ -35,6 +39,7 @@ namespace DashboardWpf.Services
 
             Tour komplettTour2 = new Tour()
             {
+                Date = date,
                 Name = "002",
                 FactH = 8,
                 PlanH = 8,
@@ -50,6 +55,7 @@ namespace DashboardWpf.Services
 
             Tour leerTour1 = new Tour()
             {
+                Date = date,
                 Name = "003",
                 FactH = 0,
                 PlanH = 8,
@@ -67,6 +73,7 @@ namespace DashboardWpf.Services
 
             Tour leerTour2 = new Tour()
             {
+                Date = date,
                 Name = "005",
                 FactH = 0,
                 PlanH = 8,
@@ -83,6 +90,7 @@ namespace DashboardWpf.Services
 
             Tour mixTour1 = new Tour()
             {
+                Date = date,
                 Name = "004",
                 FactH = 3,
                 PlanH = 8,
@@ -99,6 +107,7 @@ namespace DashboardWpf.Services
 
             Tour mixTour2 = new Tour()
             {
+                Date = date,
                 Name = "006",
                 FactH = 3,
                 PlanH = 8,
@@ -113,7 +122,21 @@ namespace DashboardWpf.Services
                 }
             };
 
-            result.AddRange(new Tour[] { komplettTour1, komplettTour2, leerTour1, leerTour2, mixTour1, mixTour2 });
+            switch (date.DayOfWeek)
+            {
+                case DayOfWeek.Saturday:
+                    result.AddRange(new Tour[] { komplettTour1, leerTour1, mixTour1 });
+                    break;
+
+                case DayOfWeek.Monday:
+                    result.AddRange(new Tour[] { komplettTour2, leerTour2, mixTour1, mixTour2 });
+                    break;
+
+                default:
+                    result.AddRange(new Tour[] { komplettTour1, komplettTour2, leerTour1, leerTour2, mixTour1, mixTour2 });
+                    break;
+            }
+
             return result;
         }
 
