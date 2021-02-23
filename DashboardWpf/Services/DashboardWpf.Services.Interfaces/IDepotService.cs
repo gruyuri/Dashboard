@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DashboardWpf.Services.Interfaces
 {
-    public interface IDepoService
+    public interface IDepotService
     {
         public IList<Tour> GetDepoTours(string depoCode, DateTime date);
 

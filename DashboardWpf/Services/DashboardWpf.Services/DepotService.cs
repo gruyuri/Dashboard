@@ -2,11 +2,12 @@
 using DashboardWpf.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace DashboardWpf.Services
 {
-    public class DepoService : IDepoService
+    public class DepotService : IDepotService
     {
         public IList<Employee> GetDepoEmployees(string depoCode)
         {
@@ -27,14 +28,14 @@ namespace DashboardWpf.Services
                 Name = "001",
                 FactH = 6,
                 PlanH = 8,
-                Boxes = new List<Box>()
+                Boxes = new ObservableCollection<Box>( new List<Box>()
                 {
                     new Box() { BoxNumber = "01", Employee = employees[0] },
                     new Box() { BoxNumber = "02", Employee = employees[0] },
                     new Box() { BoxNumber = "03", Employee = employees[0] },
                     new Box() { BoxNumber = "04", Employee = employees[0] },
                     new Box() { BoxNumber = "05", Employee = employees[0] }
-                }
+                })
             };
 
             Tour komplettTour2 = new Tour()
@@ -43,14 +44,14 @@ namespace DashboardWpf.Services
                 Name = "002",
                 FactH = 8,
                 PlanH = 8,
-                Boxes = new List<Box>()
+                Boxes = new ObservableCollection<Box>(new List<Box>()
                 {
                     new Box() { BoxNumber = "01", Employee = employees[1] },
                     new Box() { BoxNumber = "02", Employee = employees[1] },
                     new Box() { BoxNumber = "03", Employee = employees[1] },
                     new Box() { BoxNumber = "04", Employee = employees[1] },
                     new Box() { BoxNumber = "05", Employee = employees[1] }
-                }
+                })
             };
 
             Tour leerTour1 = new Tour()
@@ -59,7 +60,7 @@ namespace DashboardWpf.Services
                 Name = "003",
                 FactH = 0,
                 PlanH = 8,
-                Boxes = new List<Box>()
+                Boxes = new ObservableCollection<Box>(new List<Box>()
                 {
                     new Box() { BoxNumber = "01" },
                     new Box() { BoxNumber = "02" },
@@ -68,7 +69,7 @@ namespace DashboardWpf.Services
                     new Box() { BoxNumber = "05" },
                     new Box() { BoxNumber = "06" },
                     new Box() { BoxNumber = "07" },
-                }
+                })
             };
 
             Tour leerTour2 = new Tour()
@@ -77,7 +78,7 @@ namespace DashboardWpf.Services
                 Name = "005",
                 FactH = 0,
                 PlanH = 8,
-                Boxes = new List<Box>()
+                Boxes = new ObservableCollection<Box>(new List<Box>()
                 {
                     new Box() { BoxNumber = "01" },
                     new Box() { BoxNumber = "02" },
@@ -85,7 +86,7 @@ namespace DashboardWpf.Services
                     new Box() { BoxNumber = "04" },
                     new Box() { BoxNumber = "05" },
                     new Box() { BoxNumber = "06" },
-                }
+                })
             };
 
             Tour mixTour1 = new Tour()
@@ -94,7 +95,7 @@ namespace DashboardWpf.Services
                 Name = "004",
                 FactH = 3,
                 PlanH = 8,
-                Boxes = new List<Box>()
+                Boxes = new ObservableCollection<Box>(new List<Box>()
                 {
                     new Box() { BoxNumber = "01", Employee = employees[2] },
                     new Box() { BoxNumber = "02", Employee = employees[2] },
@@ -102,7 +103,7 @@ namespace DashboardWpf.Services
                     new Box() { BoxNumber = "04", Employee = employees[3] },
                     new Box() { BoxNumber = "05", Employee = employees[4] },
                     new Box() { BoxNumber = "06", Employee = employees[4] }
-                }
+                })
             };
 
             Tour mixTour2 = new Tour()
@@ -111,7 +112,7 @@ namespace DashboardWpf.Services
                 Name = "006",
                 FactH = 3,
                 PlanH = 8,
-                Boxes = new List<Box>()
+                Boxes = new ObservableCollection<Box>(new List<Box>()
                 {
                     new Box() { BoxNumber = "01", Employee = employees[2] },
                     new Box() { BoxNumber = "02" },
@@ -119,7 +120,7 @@ namespace DashboardWpf.Services
                     new Box() { BoxNumber = "04" },
                     new Box() { BoxNumber = "05", Employee = employees[6] },
                     new Box() { BoxNumber = "06" }
-                }
+                })
             };
 
             switch (date.DayOfWeek)

@@ -13,7 +13,6 @@ namespace DashboardWpf.Modules.TKB.Views
             InitializeComponent();
         }
 
-
         private void OnExpanded(object sender, RoutedEventArgs e)
         {
             if (sender is Expander expander)

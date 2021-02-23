@@ -5,27 +5,92 @@ using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Windows.Input;
 
 namespace DashboardWpf.Modules.TKB.ViewModels
 {
     public class TKBStammdatenViewModel : BindableBase
     {
-        private IDepoService dataService;
-        public TKBStammdatenViewModel(IDepoService depoService)
+        private IDepotService dataService;
+        public TKBStammdatenViewModel(IDepotService depoService)
         {
             dataService = depoService;
 
-            Tours = new ObservableCollection<Tour>(dataService.GetDepoTours(string.Empty, SelectedDate));
+            ReloadTours();
+
             Employees = dataService.GetDepoEmployees(string.Empty);
+
+            Save = new DelegateCommand(SaveData, CanSave)
+                .ObservesProperty(() => HasChanges);
+
+            Cancel = new DelegateCommand(RollbackChanges, CanCancel)
+                .ObservesProperty(() => HasChanges);
+
         }
+
+        private bool _hasChanges;
+
+        public bool HasChanges
+        {
+            get => _hasChanges;
+            set => SetProperty(ref _hasChanges, value);
+        }
+
+
         private ObservableCollection<Tour> _tours;
 
         public ObservableCollection<Tour> Tours
         {
             get => _tours;
-            set => SetProperty(ref _tours, value);
+            set {
+                if (_tours != null)
+                    foreach (var t in _tours)
+                        t.PropertyChanged -= ChildItemWasChanged;
+
+                HasChanges = false;
+                SetProperty(ref _tours, value);
+
+                foreach (var t in _tours)
+                    t.PropertyChanged += ChildItemWasChanged;
+            }
         }
+
+        private void ChildItemWasChanged(object sender, PropertyChangedEventArgs e)
+        {
+            HasChanges = true;
+        }
+
+        public ICommand Save { get; set; }
+        public ICommand Cancel { get; set; }
+
+        private bool CanSave()
+        {
+            return HasChanges;
+        }
+
+        private bool CanCancel()
+        {
+            return HasChanges;
+        }
+
+        /// <summary>
+        /// Actual save changes
+        /// </summary>
+        private void SaveData()
+        {
+
+        }
+
+        /// <summary>
+        /// Rollback changes und restore initial state
+        /// </summary>
+        private void RollbackChanges()
+        {
+
+        }
+
 
         private IList<Employee> _employees;
 
@@ -51,5 +116,6 @@ namespace DashboardWpf.Modules.TKB.ViewModels
         {
             Tours = new ObservableCollection<Tour>(dataService.GetDepoTours(string.Empty, SelectedDate));
         }
+
     }
 }

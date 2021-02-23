@@ -13,6 +13,11 @@
                   Background="Transparent" FontWeight="Bold"
                   SelectedItemChanged="OnSelectedItemChanged"
                   >
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="{x:Type TreeViewItem}">
+                    <Setter Property="IsExpanded" Value="True" />
+                </Style>
+            </TreeView.ItemContainerStyle>
             <TreeView.Resources>
                 <HierarchicalDataTemplate DataType="{x:Type model:ModuleUI}" ItemsSource="{Binding Path=Items}"
                                           >
