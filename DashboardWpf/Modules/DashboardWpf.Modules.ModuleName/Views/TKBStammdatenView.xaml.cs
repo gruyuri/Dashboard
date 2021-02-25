@@ -23,5 +23,6 @@ namespace DashboardWpf.Modules.TKB.Views
                                                             : Visibility.Collapsed;
             }
         }
+
     }
 }

@@ -19,14 +19,30 @@
         
         <DataGrid Grid.Row="1" Name="dgTours" Margin="5"
                   AutoGenerateColumns="False" AlternatingRowBackground="Azure"
-              CanUserAddRows="false" CanUserDeleteRows="False" 
+                    CanUserAddRows="false" CanUserDeleteRows="False" 
                   BorderThickness="1"
+                  RowDetailsVisibilityMode="Collapsed"
            ItemsSource="{Binding Tours}">
             <DataGrid.CellStyle>
                 <Style TargetType="DataGridCell">
                     <Setter Property="BorderThickness" Value="0"/>
                 </Style>
             </DataGrid.CellStyle>
+
+            <DataGrid.Resources>
+                <Style x:Key="errorStyle" TargetType="{x:Type TextBox}">
+                    <Setter Property="Padding" Value="-2"/>
+                    <Setter Property="BorderThickness" Value="2"/>
+                    <Style.Triggers>
+                        <Trigger Property="Validation.HasError" Value="True">
+                            <Setter Property="Background" Value="Red"/>
+                            <Setter Property="ToolTip" 
+                Value="{Binding RelativeSource={RelativeSource Self},
+                  Path=(Validation.Errors)[0].ErrorContent}"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.Resources>
 
             <DataGrid.Columns>
                 <DataGridTemplateColumn>
@@ -39,9 +55,36 @@
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Tour" IsReadOnly="True" Width="40" Binding="{Binding Name}" />
                 <DataGridTextColumn Header="Status" IsReadOnly="True" Width="60" Binding="{Binding Status}" />
-                <DataGridTextColumn Header="Zusteller" IsReadOnly="True" Width="*" Binding="{Binding MainEmployee}" />
-                <DataGridTextColumn Header="Fakt H" IsReadOnly="False" Width="45" Binding="{Binding FactH, UpdateSourceTrigger=PropertyChanged}" />
-                <DataGridTextColumn Header="Soll H" IsReadOnly="False" Width="45" Binding="{Binding PlanH, UpdateSourceTrigger=PropertyChanged}" />
+                <!--DataGridTextColumn Header="Zusteller" IsReadOnly="True" Width="*" Binding="{Binding MainEmployee}" /-->
+
+                <DataGridTemplateColumn Header="Zusteller" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding SelectedEmployee.Name}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding ElementName=UserControlView, Path=DataContext.Employees}"
+                                      SelectedItem="{Binding SelectedEmployee, UpdateSourceTrigger=PropertyChanged}"
+                                                      >
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+
+
+                <DataGridTextColumn Header="Fakt H" IsReadOnly="False" Width="45" 
+                                    Binding="{Binding FactH, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" />
+                <DataGridTextColumn Header="Soll H" IsReadOnly="False" Width="45" 
+                                    Binding="{Binding PlanH, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" />
             </DataGrid.Columns>
 
             <DataGrid.RowDetailsTemplate>
@@ -66,7 +109,7 @@
                                     <DataGridTemplateColumn.CellEditingTemplate>
                                         <DataTemplate>
                                             <ComboBox ItemsSource="{Binding ElementName=UserControlView, Path=DataContext.Employees}"
-                                                      SelectedItem="{Binding Employee}">
+                                                      SelectedItem="{Binding Employee, UpdateSourceTrigger=PropertyChanged}">
                                                 <ComboBox.ItemTemplate>
                                                     <DataTemplate>
                                                         <TextBlock Text="{Binding Name}"/>
