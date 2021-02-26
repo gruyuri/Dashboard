@@ -109,12 +109,48 @@
                                     <DataGridTemplateColumn.CellEditingTemplate>
                                         <DataTemplate>
                                             <ComboBox ItemsSource="{Binding ElementName=UserControlView, Path=DataContext.Employees}"
+                                                      HorizontalContentAlignment="Left" HorizontalAlignment="Stretch"
                                                       SelectedItem="{Binding Employee, UpdateSourceTrigger=PropertyChanged}">
                                                 <ComboBox.ItemTemplate>
                                                     <DataTemplate>
-                                                        <TextBlock Text="{Binding Name}"/>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Margin="2" Text="{Binding Code}"/>
+                                                            <TextBlock Margin="2" Text="{Binding Name}"/>
+                                                        </StackPanel>
                                                     </DataTemplate>
                                                 </ComboBox.ItemTemplate>
+                                                <ComboBox.ItemContainerStyle>
+                                                    <Style TargetType="{x:Type ComboBoxItem}">
+                                                        <Setter Property="SnapsToDevicePixels" Value="True"/>
+                                                        <Setter Property="OverridesDefaultStyle" Value="True"/>
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                                                                    <Border Name="templateBorder" Padding="2" SnapsToDevicePixels="true">
+                                                                        <ContentPresenter>
+                                                                            <ContentPresenter.Content>
+                                                                                <Grid>
+                                                                                    <Grid.ColumnDefinitions>
+                                                                                        <ColumnDefinition/>
+                                                                                        <ColumnDefinition/>
+                                                                                    </Grid.ColumnDefinitions>
+                                                                                    <TextBlock Margin="5" Grid.Column="0" Text="{Binding Code}"/>
+                                                                                    <TextBlock Margin="5" Grid.Column="1" Text="{Binding Name}"/>
+                                                                                </Grid>
+                                                                            </ContentPresenter.Content>
+                                                                        </ContentPresenter>
+                                                                    </Border>
+                                                                    <ControlTemplate.Triggers>
+                                                                        <Trigger Property="IsHighlighted" Value="True">
+                                                                            <Setter Property="Foreground" Value="{x:Static SystemColors.HighlightTextBrush}"/>
+                                                                            <Setter TargetName="templateBorder" Property="Background" Value="{x:Static SystemColors.HighlightBrush}"/>
+                                                                        </Trigger>
+                                                                    </ControlTemplate.Triggers>
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Style>
+                                                </ComboBox.ItemContainerStyle>
                                                 
                                             </ComboBox>
                                         </DataTemplate>

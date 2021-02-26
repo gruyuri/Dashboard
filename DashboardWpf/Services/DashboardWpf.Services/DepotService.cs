@@ -3,6 +3,7 @@ using DashboardWpf.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 
 namespace DashboardWpf.Services
@@ -145,15 +146,15 @@ namespace DashboardWpf.Services
         {
             var result = new List<Employee>();
 
-            result.Add(new Employee() { Name = "Zusteller A", Code = "XXX1", IsAvailableForSubstitution = true });
-            result.Add(new Employee() { Name = "Abraham Brams", Code = "XXX2", IsAvailableForSubstitution = true });
-            result.Add(new Employee() { Name = "Brigitta Kraft", Code = "XXX3", IsAvailableForSubstitution = true });
-            result.Add(new Employee() { Name = "Daniel Hacket", Code = "XXX4", IsAvailableForSubstitution = false });
-            result.Add(new Employee() { Name = "Margarett Mitchell", Code = "XXX5", IsAvailableForSubstitution = true });
-            result.Add(new Employee() { Name = "Lucia Freiburg", Code = "XXX6", IsAvailableForSubstitution = true });
-            result.Add(new Employee() { Name = "Samuel Edwards", Code = "XXX7", IsAvailableForSubstitution = false });
+            result.Add(new Employee() { Name = "Zusteller A", Code = "02103554", IsAvailableForSubstitution = true });
+            result.Add(new Employee() { Name = "Abraham Brams", Code = "99152372", IsAvailableForSubstitution = true });
+            result.Add(new Employee() { Name = "Brigitta Kraft", Code = "00107964", IsAvailableForSubstitution = true });
+            result.Add(new Employee() { Name = "Daniel Hacket", Code = "02103554", IsAvailableForSubstitution = false });
+            result.Add(new Employee() { Name = "Margarett Mitchell", Code = "02103554", IsAvailableForSubstitution = true });
+            result.Add(new Employee() { Name = "Lucia Freiburg", Code = "02103554", IsAvailableForSubstitution = true });
+            result.Add(new Employee() { Name = "Samuel Edwards", Code = "02103554", IsAvailableForSubstitution = false });
 
-            return result;
+            return result.OrderBy(x => x.Name).ToList();
         }
     }
 }
