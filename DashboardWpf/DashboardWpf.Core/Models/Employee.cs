@@ -12,5 +12,15 @@ namespace DashboardWpf.Core.Models
         public string Name { get; set; }
 
         public bool IsAvailableForSubstitution { get; set; } = false;
+
+        public override string ToString() => $"{Code} {Name}";
+
+        public Employee Clone => new Employee()
+        {
+            Code = this.Code,
+            Name = this.Name,
+            IsAvailableForSubstitution = this.IsAvailableForSubstitution
+        };
+
     }
 }

@@ -5,7 +5,7 @@
              xmlns:model="clr-namespace:DashboardWpf.Core.Models;assembly=DashboardWpf.Core"
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True">
-    <Grid x:Name="sidePanel" Background="#FF0F4E7A" HorizontalAlignment="Left">
+    <Grid x:Name="sidePanel" Background="#FF002355" HorizontalAlignment="Left">
         <TreeView ItemsSource="{Binding ModuleItems}" 
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                   FontFamily="Century Gothic" 

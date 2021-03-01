@@ -20,7 +20,7 @@ namespace DashboardWpf.Modules.TKB.ViewModels
 
             ReloadTours();
 
-            Employees = dataService.GetDepoEmployees(string.Empty);
+            Employees = new ObservableCollection<Employee>(dataService.GetDepoEmployees(string.Empty));
 
             Save = new DelegateCommand(SaveData, CanSave)
                 .ObservesProperty(() => HasChanges);
@@ -92,9 +92,9 @@ namespace DashboardWpf.Modules.TKB.ViewModels
         }
 
 
-        private IList<Employee> _employees;
+        private ObservableCollection<Employee> _employees;
 
-        public IList<Employee> Employees
+        public ObservableCollection<Employee> Employees
         {
             get => _employees;
             set => SetProperty(ref _employees, value);

@@ -14,4 +14,15 @@
     <ProjectReference Include="..\Services\DashboardWpf.Services.Interfaces\DashboardWpf.Services.Interfaces.csproj" />
     <ProjectReference Include="..\Services\DashboardWpf.Services\DashboardWpf.Services.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="InfragisticsWPF4.Controls.Editors.XamComboEditor.v20.2">
+      <HintPath>..\..\..\..\..\Program Files\Infragistics\2020.2\WPF\CLR4.0\Bin\InfragisticsWPF4.Controls.Editors.XamComboEditor.v20.2.dll</HintPath>
+    </Reference>
+    <Reference Include="InfragisticsWPF4.DataManager.v20.2">
+      <HintPath>..\..\..\..\..\Program Files\Infragistics\2020.2\WPF\CLR4.0\Bin\InfragisticsWPF4.DataManager.v20.2.dll</HintPath>
+    </Reference>
+    <Reference Include="InfragisticsWPF4.v20.2">
+      <HintPath>..\..\..\..\..\Program Files\Infragistics\2020.2\WPF\CLR4.0\Bin\InfragisticsWPF4.v20.2.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>

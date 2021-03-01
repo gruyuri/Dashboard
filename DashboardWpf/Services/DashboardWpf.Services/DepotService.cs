@@ -149,10 +149,10 @@ namespace DashboardWpf.Services
             result.Add(new Employee() { Name = "Zusteller A", Code = "02103554", IsAvailableForSubstitution = true });
             result.Add(new Employee() { Name = "Abraham Brams", Code = "99152372", IsAvailableForSubstitution = true });
             result.Add(new Employee() { Name = "Brigitta Kraft", Code = "00107964", IsAvailableForSubstitution = true });
-            result.Add(new Employee() { Name = "Daniel Hacket", Code = "02103554", IsAvailableForSubstitution = false });
-            result.Add(new Employee() { Name = "Margarett Mitchell", Code = "02103554", IsAvailableForSubstitution = true });
-            result.Add(new Employee() { Name = "Lucia Freiburg", Code = "02103554", IsAvailableForSubstitution = true });
-            result.Add(new Employee() { Name = "Samuel Edwards", Code = "02103554", IsAvailableForSubstitution = false });
+            result.Add(new Employee() { Name = "Daniel Hacket", Code = "03457215", IsAvailableForSubstitution = false });
+            result.Add(new Employee() { Name = "Margarett Mitchell", Code = "01035681", IsAvailableForSubstitution = true });
+            result.Add(new Employee() { Name = "Lucia Freiburg", Code = "02134516", IsAvailableForSubstitution = true });
+            result.Add(new Employee() { Name = "Samuel Edwards", Code = "98123517", IsAvailableForSubstitution = false });
 
             return result.OrderBy(x => x.Name).ToList();
         }

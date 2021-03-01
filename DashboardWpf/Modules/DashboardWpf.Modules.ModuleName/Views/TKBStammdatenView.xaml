@@ -1,9 +1,17 @@
 ﻿<UserControl x:Class="DashboardWpf.Modules.TKB.Views.TKBStammdatenView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:DashboardWpf.Core.Views;assembly=DashboardWpf.Core"
+             xmlns:ig="http://schemas.infragistics.com/xaml"
              xmlns:prism="http://prismlibrary.com/"    
              Name="UserControlView"
+             Background="#FF808080"
              prism:ViewModelLocator.AutoWireViewModel="True">
+    <UserControl.Resources>
+        <ItemsPanelTemplate x:Key="ItemsTemplate">
+            <VirtualizingStackPanel/>
+        </ItemsPanelTemplate>
+    </UserControl.Resources>
     <Grid Background="LightBlue">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -14,6 +22,36 @@
         <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="5" DockPanel.Dock="Top">
             <TextBlock Text="Gultig ab:" Margin="2, 3, 5, 0" />
             <DatePicker SelectedDate="{Binding SelectedDate}" />
+
+            <ig:XamComboEditor x:Name="ComboEditorEnum" 
+                               AllowFiltering="True"
+                Margin="5 0" Padding="4 3" MinWidth="200"
+                ItemsSource="{Binding ElementName=UserControlView, Path=DataContext.Employees}">
+                <ig:XamComboEditor.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="2" Text="{Binding Name}"/>
+                            <TextBlock Margin="2" Text="{Binding Code}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ig:XamComboEditor.ItemTemplate>
+            </ig:XamComboEditor>
+
+            <ig:XamMultiColumnComboEditor x:Name="xamMultiColumnComboEditor"
+                                      DisplayMemberPath="Name"
+                                      ItemsSource="{Binding ElementName=UserControlView, Path=DataContext.Employees}"
+                                      SelectedItemsResetButtonVisibility="Collapsed"
+                                      AutoGenerateColumns="False"
+                                      Margin="5 0" Padding="4 3" MinWidth="200"
+                                      VerticalAlignment="Top"
+                                      HorizontalAlignment="Center"
+                                      >
+                <ig:XamMultiColumnComboEditor.Columns>
+                    <ig:TextComboColumn Key="Code" />
+                    <ig:TextComboColumn Key="Name" />
+                </ig:XamMultiColumnComboEditor.Columns>
+            </ig:XamMultiColumnComboEditor>
+
         </StackPanel>
                     
         
@@ -78,6 +116,26 @@
                             </ComboBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
+
+                    <!--<DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ig:XamMultiColumnComboEditor x:Name="xamMultiColumnComboEditor"
+                                      DisplayMemberPath="Name"
+                                      ItemsSource="{Binding ElementName=UserControlView, Path=DataContext.Employees}"
+                                      SelectedItemsResetButtonVisibility="Collapsed"
+                                      AutoGenerateColumns="False"
+                                      Margin="5 0" Padding="4 3" MinWidth="200"
+                                      VerticalAlignment="Top"
+                                      HorizontalAlignment="Center"
+                                      >
+                                <ig:XamMultiColumnComboEditor.Columns>
+                                    <ig:TextComboColumn Key="Code" />
+                                    <ig:TextComboColumn Key="Name" />
+                                </ig:XamMultiColumnComboEditor.Columns>
+                            </ig:XamMultiColumnComboEditor>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>-->
+                        
                 </DataGridTemplateColumn>
 
 
