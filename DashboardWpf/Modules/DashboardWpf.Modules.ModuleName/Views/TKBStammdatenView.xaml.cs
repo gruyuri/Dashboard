@@ -13,6 +13,13 @@ namespace DashboardWpf.Modules.TKB.Views
         public TKBStammdatenView()
         {
             InitializeComponent();
+
+            SetDefaultProperties();
+        }
+
+        private void SetDefaultProperties()
+        {
+            this.dateFrom.DisplayDateStart = DateTime.Today;
         }
 
         private void OnExpanded(object sender, RoutedEventArgs e)
@@ -25,5 +32,6 @@ namespace DashboardWpf.Modules.TKB.Views
                                                             : Visibility.Collapsed;
             }
         }
+
     }
 }

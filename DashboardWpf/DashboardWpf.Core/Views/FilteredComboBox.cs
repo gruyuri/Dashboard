@@ -88,7 +88,7 @@ namespace DashboardWpf.Core.Views
             {
                 foreach (var emp in employees)
                 {
-                    copyDataSource.Add(emp.Clone);
+                    //copyDataSource.Add(emp.Clone);
                 }
             }
             ICollectionView view = CollectionViewSource.GetDefaultView(items);

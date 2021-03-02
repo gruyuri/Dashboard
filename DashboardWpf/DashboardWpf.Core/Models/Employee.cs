@@ -15,12 +15,6 @@ namespace DashboardWpf.Core.Models
 
         public override string ToString() => $"{Code} {Name}";
 
-        public Employee Clone => new Employee()
-        {
-            Code = this.Code,
-            Name = this.Name,
-            IsAvailableForSubstitution = this.IsAvailableForSubstitution
-        };
-
+        public string EmployeeDisplayName => $"{Code} {Name}";
     }
 }

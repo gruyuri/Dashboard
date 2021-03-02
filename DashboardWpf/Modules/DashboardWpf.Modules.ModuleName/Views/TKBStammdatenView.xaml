@@ -21,45 +21,16 @@
 
         <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="5" DockPanel.Dock="Top">
             <TextBlock Text="Gultig ab:" Margin="2, 3, 5, 0" />
-            <DatePicker SelectedDate="{Binding SelectedDate}" />
-
-            <ig:XamComboEditor x:Name="ComboEditorEnum" 
-                               AllowFiltering="True"
-                Margin="5 0" Padding="4 3" MinWidth="200"
-                ItemsSource="{Binding ElementName=UserControlView, Path=DataContext.Employees}">
-                <ig:XamComboEditor.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Margin="2" Text="{Binding Name}"/>
-                            <TextBlock Margin="2" Text="{Binding Code}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ig:XamComboEditor.ItemTemplate>
-            </ig:XamComboEditor>
-
-            <ig:XamMultiColumnComboEditor x:Name="xamMultiColumnComboEditor"
-                                      DisplayMemberPath="Name"
-                                      ItemsSource="{Binding ElementName=UserControlView, Path=DataContext.Employees}"
-                                      SelectedItemsResetButtonVisibility="Collapsed"
-                                      AutoGenerateColumns="False"
-                                      Margin="5 0" Padding="4 3" MinWidth="200"
-                                      VerticalAlignment="Top"
-                                      HorizontalAlignment="Center"
-                                      >
-                <ig:XamMultiColumnComboEditor.Columns>
-                    <ig:TextComboColumn Key="Code" />
-                    <ig:TextComboColumn Key="Name" />
-                </ig:XamMultiColumnComboEditor.Columns>
-            </ig:XamMultiColumnComboEditor>
-
+            <DatePicker x:Name="dateFrom" SelectedDate="{Binding SelectedDate}" />
         </StackPanel>
                     
-        
-        <DataGrid Grid.Row="1" Name="dgTours" Margin="5"
+        <!--  Parent DataGrid - Tours -->
+        <local:OneClickDataGrid Grid.Row="1" Name="dgTours" Margin="5"
                   AutoGenerateColumns="False" AlternatingRowBackground="Azure"
                     CanUserAddRows="false" CanUserDeleteRows="False" 
                   BorderThickness="1"
                   RowDetailsVisibilityMode="Collapsed"
+                  
            ItemsSource="{Binding Tours}">
             <DataGrid.CellStyle>
                 <Style TargetType="DataGridCell">
@@ -93,80 +64,117 @@
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Tour" IsReadOnly="True" Width="40" Binding="{Binding Name}" />
                 <DataGridTextColumn Header="Status" IsReadOnly="True" Width="60" Binding="{Binding Status}" />
-                <!--DataGridTextColumn Header="Zusteller" IsReadOnly="True" Width="*" Binding="{Binding MainEmployee}" /-->
 
                 <DataGridTemplateColumn Header="Zusteller" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding SelectedEmployee.Name}" />
+                            <TextBlock Text="{Binding SelectedEmployee.EmployeeDisplayName, Mode=OneWay}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
 
                     <DataGridTemplateColumn.CellEditingTemplate>
-                        <DataTemplate>
-                            <ComboBox ItemsSource="{Binding ElementName=UserControlView, Path=DataContext.Employees}"
-                                      SelectedItem="{Binding SelectedEmployee, UpdateSourceTrigger=PropertyChanged}"
-                                                      >
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding Name}"/>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
 
-                            </ComboBox>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellEditingTemplate>
-
-                    <!--<DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <ig:XamMultiColumnComboEditor x:Name="xamMultiColumnComboEditor"
+                            <StackPanel Orientation="Horizontal" Margin="0" >
+                                <ig:XamMultiColumnComboEditor x:Name="xamMultiColumnComboEditor"
                                       DisplayMemberPath="Name"
                                       ItemsSource="{Binding ElementName=UserControlView, Path=DataContext.Employees}"
+                                        SelectedItem="{Binding SelectedEmployee, UpdateSourceTrigger=PropertyChanged}"
                                       SelectedItemsResetButtonVisibility="Collapsed"
                                       AutoGenerateColumns="False"
-                                      Margin="5 0" Padding="4 3" MinWidth="200"
-                                      VerticalAlignment="Top"
-                                      HorizontalAlignment="Center"
+                                      Margin="5 2" MinWidth="200"
+                                      VerticalAlignment="Center"
+                                      HorizontalContentAlignment="Stretch"
+                                      Foreground="Black"
                                       >
-                                <ig:XamMultiColumnComboEditor.Columns>
-                                    <ig:TextComboColumn Key="Code" />
-                                    <ig:TextComboColumn Key="Name" />
-                                </ig:XamMultiColumnComboEditor.Columns>
-                            </ig:XamMultiColumnComboEditor>
+                                    <ig:XamMultiColumnComboEditor.Columns>
+                                        <ig:TextComboColumn Key="Code" />
+                                        <ig:TextComboColumn Key="Name" />
+                                    </ig:XamMultiColumnComboEditor.Columns>
+                                </ig:XamMultiColumnComboEditor>
+                                <!--<ComboBox ItemsSource="{Binding ElementName=UserControlView, Path=DataContext.Employees}"
+                                      SelectedItem="{Binding SelectedEmployee, UpdateSourceTrigger=PropertyChanged}" Width="150"
+                                                      >
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Name}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+
+                                </ComboBox>-->
+                            </StackPanel>
                         </DataTemplate>
-                    </DataGridTemplateColumn.CellEditingTemplate>-->
-                        
+                    </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
 
 
-                <DataGridTextColumn Header="Fakt H" IsReadOnly="False" Width="45" 
+                <!--<DataGridTextColumn Header="Fakt H" IsReadOnly="False" Width="45" 
                                     Binding="{Binding FactH, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" />
                 <DataGridTextColumn Header="Soll H" IsReadOnly="False" Width="45" 
-                                    Binding="{Binding PlanH, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" />
+                                    Binding="{Binding PlanH, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" />-->
+
+                <DataGridTemplateColumn Header="Fakt H" IsReadOnly="False" Width="45">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding FactH}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <local:NumericUpDownControl Minimum="0" Maximum="10" 
+                                       Value="{Binding FactH, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    
+                                </local:NumericUpDownControl>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+
             </DataGrid.Columns>
 
+            <!--  Child DataGrid - Boxes -->
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
                     <DockPanel Background="White">
-                        <DataGrid Margin="60,10" AutoGenerateColumns="False"
+                        <local:OneClickDataGrid Margin="60,10" AutoGenerateColumns="False"
                                   CanUserAddRows="false" CanUserDeleteRows="False" 
                                   BorderThickness="1"
                                   AlternatingRowBackground="LightSalmon"
                                   ItemsSource="{Binding Boxes}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Fach" IsReadOnly="True" Width="60" Binding="{Binding BoxNumber}" />
-                                <!--DataGridTextColumn Header="Mitarbeiter" IsReadOnly="False" Width="auto" Binding="{Binding Employee.Name}" /-->
 
                                 <DataGridTemplateColumn Header="Mitarbeiter" Width="auto">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding Employee.Name}" />
+                                            <TextBlock Text="{Binding Employee.EmployeeDisplayName}" HorizontalAlignment="Stretch" />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                     
                                     <DataGridTemplateColumn.CellEditingTemplate>
                                         <DataTemplate>
-                                            <ComboBox ItemsSource="{Binding ElementName=UserControlView, Path=DataContext.Employees}"
+                                            <StackPanel Orientation="Horizontal" Margin="0" >
+                                                <ig:XamMultiColumnComboEditor x:Name="xamMultiColumnComboEditorChild"
+                                      DisplayMemberPath="Name"
+                                      ItemsSource="{Binding ElementName=UserControlView, Path=DataContext.Employees}"
+                                                      HorizontalAlignment="Stretch"
+                                                      SelectedItem="{Binding Employee, UpdateSourceTrigger=PropertyChanged}"
+                                      SelectedItemsResetButtonVisibility="Collapsed"
+                                      AutoGenerateColumns="False"
+                                      Margin="5 2" MinWidth="200" Width="auto"
+                                      VerticalAlignment="Center"
+                                      HorizontalContentAlignment="Stretch"
+                                      Foreground="Black"
+                                      >
+                                                    <ig:XamMultiColumnComboEditor.Columns>
+                                                        <ig:TextComboColumn Key="Code" />
+                                                        <ig:TextComboColumn Key="Name" />
+                                                    </ig:XamMultiColumnComboEditor.Columns>
+                                                </ig:XamMultiColumnComboEditor>
+
+                                            </StackPanel>
+                                            <!--<ComboBox ItemsSource="{Binding ElementName=UserControlView, Path=DataContext.Employees}"
                                                       HorizontalContentAlignment="Left" HorizontalAlignment="Stretch"
                                                       SelectedItem="{Binding Employee, UpdateSourceTrigger=PropertyChanged}">
                                                 <ComboBox.ItemTemplate>
@@ -210,18 +218,18 @@
                                                     </Style>
                                                 </ComboBox.ItemContainerStyle>
                                                 
-                                            </ComboBox>
+                                            </ComboBox>-->
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellEditingTemplate>
                                 </DataGridTemplateColumn>
                             </DataGrid.Columns>
 
-                        </DataGrid>
+                        </local:OneClickDataGrid>
                     </DockPanel>
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>
 
-        </DataGrid>
+        </local:OneClickDataGrid>
 
         <StackPanel Orientation="Horizontal" Grid.Row="2" 
                     DockPanel.Dock="Bottom"
