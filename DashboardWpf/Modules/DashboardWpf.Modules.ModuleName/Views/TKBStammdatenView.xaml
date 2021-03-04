@@ -1,8 +1,11 @@
 ﻿<UserControl x:Class="DashboardWpf.Modules.TKB.Views.TKBStammdatenView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:core="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:DashboardWpf.Core.Views;assembly=DashboardWpf.Core"
+             xmlns:uc="clr-namespace:DashboardWpf.UserControls.Views;assembly=DashboardWpf.UserControls"
              xmlns:ig="http://schemas.infragistics.com/xaml"
+             xmlns:igEditors="http://infragistics.com/Editors"
              xmlns:prism="http://prismlibrary.com/"    
              Name="UserControlView"
              Background="#FF808080"
@@ -12,6 +15,7 @@
             <VirtualizingStackPanel/>
         </ItemsPanelTemplate>
     </UserControl.Resources>
+
     <Grid Background="LightBlue">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -22,10 +26,14 @@
         <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="5" DockPanel.Dock="Top">
             <TextBlock Text="Gultig ab:" Margin="2, 3, 5, 0" />
             <DatePicker x:Name="dateFrom" SelectedDate="{Binding SelectedDate}" />
+            <!--<local:HighlightDatePicker x:Name="dateFrom" 
+                                       SelectedDate="{Binding SelectedDate}" 
+                                       HighlightedDates="{Binding HighlightedDates}"
+                                       HighlightBrush="Red" />-->
         </StackPanel>
                     
         <!--  Parent DataGrid - Tours -->
-        <local:OneClickDataGrid Grid.Row="1" Name="dgTours" Margin="5"
+        <uc:OneClickDataGrid Grid.Row="1" Name="dgTours" Margin="5"
                   AutoGenerateColumns="False" AlternatingRowBackground="Azure"
                     CanUserAddRows="false" CanUserDeleteRows="False" 
                   BorderThickness="1"
@@ -88,8 +96,8 @@
                                       Foreground="Black"
                                       >
                                     <ig:XamMultiColumnComboEditor.Columns>
-                                        <ig:TextComboColumn Key="Code" />
                                         <ig:TextComboColumn Key="Name" />
+                                        <ig:TextComboColumn Key="Code" />
                                     </ig:XamMultiColumnComboEditor.Columns>
                                 </ig:XamMultiColumnComboEditor>
                                 <!--<ComboBox ItemsSource="{Binding ElementName=UserControlView, Path=DataContext.Employees}"
@@ -108,28 +116,30 @@
                 </DataGridTemplateColumn>
 
 
-                <!--<DataGridTextColumn Header="Fakt H" IsReadOnly="False" Width="45" 
-                                    Binding="{Binding FactH, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" />
-                <DataGridTextColumn Header="Soll H" IsReadOnly="False" Width="45" 
-                                    Binding="{Binding PlanH, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" />-->
-
-                <DataGridTemplateColumn Header="Fakt H" IsReadOnly="False" Width="45">
+                <DataGridTemplateColumn Header="Fakt H" Width="45" IsReadOnly="False">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding FactH}" />
+                            <TextBlock Text="{Binding FactH}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
+                    
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <local:NumericUpDownControl Minimum="0" Maximum="10" 
-                                       Value="{Binding FactH, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                    
-                                </local:NumericUpDownControl>
+                                <igEditors:XamNumericEditor MinWidth="45" MaxWidth="55" Mask="99"
+                                    ValueType="core:Int32"
+                                    Value="{Binding FactH, UpdateSourceTrigger=PropertyChanged}">
+                                    <igEditors:XamNumericEditor.ValueConstraint>
+                                        <igEditors:ValueConstraint MinInclusive="0" MaxInclusive="10" />
+                                    </igEditors:XamNumericEditor.ValueConstraint>
+                                </igEditors:XamNumericEditor>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
+                    
+                <DataGridTextColumn Header="Soll H" IsReadOnly="False" Width="45" 
+                                    Binding="{Binding PlanH, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" />
 
             </DataGrid.Columns>
 
@@ -137,7 +147,7 @@
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
                     <DockPanel Background="White">
-                        <local:OneClickDataGrid Margin="60,10" AutoGenerateColumns="False"
+                        <uc:OneClickDataGrid Margin="60,10" AutoGenerateColumns="False"
                                   CanUserAddRows="false" CanUserDeleteRows="False" 
                                   BorderThickness="1"
                                   AlternatingRowBackground="LightSalmon"
@@ -168,8 +178,8 @@
                                       Foreground="Black"
                                       >
                                                     <ig:XamMultiColumnComboEditor.Columns>
-                                                        <ig:TextComboColumn Key="Code" />
                                                         <ig:TextComboColumn Key="Name" />
+                                                        <ig:TextComboColumn Key="Code" />
                                                     </ig:XamMultiColumnComboEditor.Columns>
                                                 </ig:XamMultiColumnComboEditor>
 
@@ -224,12 +234,12 @@
                                 </DataGridTemplateColumn>
                             </DataGrid.Columns>
 
-                        </local:OneClickDataGrid>
+                        </uc:OneClickDataGrid>
                     </DockPanel>
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>
 
-        </local:OneClickDataGrid>
+        </uc:OneClickDataGrid>
 
         <StackPanel Orientation="Horizontal" Grid.Row="2" 
                     DockPanel.Dock="Bottom"

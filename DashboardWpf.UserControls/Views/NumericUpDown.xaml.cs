@@ -13,16 +13,17 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Text.RegularExpressions;
 
-namespace DashboardWpf.Core.Views
+namespace DashboardWpf.UserControls.Views
 {
     /// <summary>
-    /// Логика взаимодействия для NumericUpDownControl.xaml
+    /// Логика взаимодействия для NumericUpDown.xaml
     /// </summary>
-    public partial class NumericUpDownControl : UserControl
+    public partial class NumericUpDown : UserControl
     {
         private readonly Regex _numMatch;
 
-        public NumericUpDownControl()
+        /// <summary>Initializes a new instance of the NumericBoxControlLib.NumericBox class.</summary>
+        public NumericUpDown()
         {
             InitializeComponent();
 
@@ -35,7 +36,6 @@ namespace DashboardWpf.Core.Views
         private void ResetText(TextBox tb)
         {
             tb.Text = 0 < Minimum ? Minimum.ToString() : "0";
-
             tb.SelectAll();
         }
 
@@ -78,7 +78,6 @@ namespace DashboardWpf.Core.Views
 
         /// <summary>The Value property represents the TextBoxValue of the control.</summary>
         /// <returns>The current TextBoxValue of the control</returns>      
-
         public int Value
         {
             get => (int)GetValue(ValueProperty);
@@ -87,19 +86,20 @@ namespace DashboardWpf.Core.Views
             {
                 TextBoxValue.Text = value.ToString();
                 SetValue(ValueProperty, value);
+
             }
         }
 
         // Using a DependencyProperty as the backing store for Value.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ValueProperty =
-            DependencyProperty.Register("Value", typeof(int), typeof(NumericUpDownControl),
+            DependencyProperty.Register("Value", typeof(int), typeof(NumericUpDown),
               new PropertyMetadata(0, new PropertyChangedCallback(OnSomeValuePropertyChanged)));
 
 
         private static void OnSomeValuePropertyChanged(
         DependencyObject target, DependencyPropertyChangedEventArgs e)
         {
-            NumericUpDownControl numericBox = target as NumericUpDownControl;
+            NumericUpDown numericBox = target as NumericUpDown;
             numericBox.TextBoxValue.Text = e.NewValue.ToString();
         }
 
@@ -108,13 +108,13 @@ namespace DashboardWpf.Core.Views
         /// </summary>
         public int Maximum
         {
-            get => (int) GetValue(MaximumProperty);
+            get => (int)GetValue(MaximumProperty);
             set => SetValue(MaximumProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for Maximum.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MaximumProperty =
-            DependencyProperty.Register("Maximum", typeof(int), typeof(NumericUpDownControl), new UIPropertyMetadata(10));
+            DependencyProperty.Register("Maximum", typeof(int), typeof(NumericUpDown), new UIPropertyMetadata(10));
 
         /// <summary>
         /// Minimum value of the numeric up down conrol.
@@ -127,13 +127,13 @@ namespace DashboardWpf.Core.Views
 
         // Using a DependencyProperty as the backing store for Minimum.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MinimumProperty =
-            DependencyProperty.Register("Minimum", typeof(int), typeof(NumericUpDownControl), new UIPropertyMetadata(0));
+            DependencyProperty.Register("Minimum", typeof(int), typeof(NumericUpDown), new UIPropertyMetadata(0));
 
 
         // Value changed
         private static readonly RoutedEvent ValueChangedEvent =
             EventManager.RegisterRoutedEvent("ValueChanged", RoutingStrategy.Bubble,
-            typeof(RoutedEventHandler), typeof(NumericUpDownControl));
+            typeof(RoutedEventHandler), typeof(NumericUpDown));
 
         /// <summary>The ValueChanged event is called when the TextBoxValue of the control changes.</summary>
         public event RoutedEventHandler ValueChanged
@@ -145,7 +145,7 @@ namespace DashboardWpf.Core.Views
         //Increase button clicked
         private static readonly RoutedEvent IncreaseClickedEvent =
             EventManager.RegisterRoutedEvent("IncreaseClicked", RoutingStrategy.Bubble,
-            typeof(RoutedEventHandler), typeof(NumericUpDownControl));
+            typeof(RoutedEventHandler), typeof(NumericUpDown));
 
         /// <summary>The IncreaseClicked event is called when the Increase button clicked</summary>
         public event RoutedEventHandler IncreaseClicked
@@ -157,7 +157,7 @@ namespace DashboardWpf.Core.Views
         //Increase button clicked
         private static readonly RoutedEvent DecreaseClickedEvent =
             EventManager.RegisterRoutedEvent("DecreaseClicked", RoutingStrategy.Bubble,
-            typeof(RoutedEventHandler), typeof(NumericUpDownControl));
+            typeof(RoutedEventHandler), typeof(NumericUpDown));
 
         /// <summary>The DecreaseClicked event is called when the Decrease button clicked</summary>
         public event RoutedEventHandler DecreaseClicked
@@ -182,8 +182,8 @@ namespace DashboardWpf.Core.Views
             {
                 Value--;
                 RaiseEvent(new RoutedEventArgs(DecreaseClickedEvent));
-
             }
         }
+
     }
 }

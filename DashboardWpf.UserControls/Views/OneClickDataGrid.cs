@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Controls;
 
-namespace DashboardWpf.Core.Views
+namespace DashboardWpf.UserControls.Views
 {
     public class OneClickDataGrid : DataGrid
     {

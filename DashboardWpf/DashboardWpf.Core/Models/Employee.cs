@@ -13,8 +13,13 @@ namespace DashboardWpf.Core.Models
 
         public bool IsAvailableForSubstitution { get; set; } = false;
 
-        public override string ToString() => $"{Code} {Name}";
+        /// <summary>
+        /// Sign of system record, to assign Empty Status
+        /// </summary>
+        public bool IsDummy { get; set; } = false;
 
-        public string EmployeeDisplayName => $"{Code} {Name}";
+        public override string ToString() => $"{Name} {Code}";
+
+        public string EmployeeDisplayName => $"{Name} {Code}";
     }
 }

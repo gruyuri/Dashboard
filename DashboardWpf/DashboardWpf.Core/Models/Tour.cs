@@ -61,7 +61,7 @@ namespace DashboardWpf.Core.Models
 
         private void RefreshSelectedEmployee()
         {
-            if (Boxes.All(x => x.IsAssigned) && Boxes.GroupBy(x => x.Employee).Count() == 1)
+            if (Boxes.All(x => x.IsAssigned && x.Employee.IsDummy == false) && Boxes.GroupBy(x => x.Employee).Count() == 1)
                 SelectedEmployee = Boxes.FirstOrDefault()?.Employee;
             else
                 SelectedEmployee = null;
@@ -94,10 +94,11 @@ namespace DashboardWpf.Core.Models
         {
             get
             {
-                if (Boxes.All(x => !x.IsAssigned))
+                if (Boxes.All(x => !x.IsAssigned) ||
+                    Boxes.All(x => x.IsAssigned && x.Employee.IsDummy))
                     return TourStatus.Liegend;
 
-                if (Boxes.All(x => x.IsAssigned) && Boxes.GroupBy(x => x.Employee).Count() == 1)
+                if (Boxes.All(x => x.IsAssigned && !x.Employee.IsDummy) && Boxes.GroupBy(x => x.Employee).Count() == 1)
                     return TourStatus.Komplett;
 
                 return TourStatus.Mix;
@@ -145,6 +146,8 @@ namespace DashboardWpf.Core.Models
 
         public IEnumerable GetErrors(string propertyName)
         {
+            if (String.IsNullOrEmpty(propertyName)) return null;
+
             return _errorsByPropertyName.ContainsKey(propertyName) ?
                 _errorsByPropertyName[propertyName] : null;
         }

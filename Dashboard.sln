@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DashboardWpf", "DashboardWp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DashboardWpf.Core", "DashboardWpf\DashboardWpf.Core\DashboardWpf.Core.csproj", "{C180BA18-D9A6-4215-90F3-0FAD395F1EF2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DashboardWpf.UserControls", "DashboardWpf.UserControls\DashboardWpf.UserControls.csproj", "{E50B1388-3BFA-448F-A09F-A1EB733994FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{C180BA18-D9A6-4215-90F3-0FAD395F1EF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C180BA18-D9A6-4215-90F3-0FAD395F1EF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C180BA18-D9A6-4215-90F3-0FAD395F1EF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E50B1388-3BFA-448F-A09F-A1EB733994FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E50B1388-3BFA-448F-A09F-A1EB733994FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E50B1388-3BFA-448F-A09F-A1EB733994FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E50B1388-3BFA-448F-A09F-A1EB733994FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -21,6 +21,9 @@
     <Reference Include="InfragisticsWPF4.DataManager.v20.2">
       <HintPath>..\..\..\..\..\Program Files\Infragistics\2020.2\WPF\CLR4.0\Bin\InfragisticsWPF4.DataManager.v20.2.dll</HintPath>
     </Reference>
+    <Reference Include="InfragisticsWPF4.Editors.v20.2">
+      <HintPath>..\..\..\..\..\Program Files\Infragistics\2020.2\WPF\CLR4.0\Bin\InfragisticsWPF4.Editors.v20.2.dll</HintPath>
+    </Reference>
     <Reference Include="InfragisticsWPF4.v20.2">
       <HintPath>..\..\..\..\..\Program Files\Infragistics\2020.2\WPF\CLR4.0\Bin\InfragisticsWPF4.v20.2.dll</HintPath>
     </Reference>

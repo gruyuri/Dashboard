@@ -1,4 +1,5 @@
 ﻿using DashboardWpf.Core.Models;
+using DashboardWpf.Core.Views;
 using DashboardWpf.Services.Interfaces;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -22,6 +23,12 @@ namespace DashboardWpf.Modules.TKB.ViewModels
 
             Employees = new ObservableCollection<Employee>(dataService.GetDepoEmployees(string.Empty));
 
+            HighlightedDates = new List<HighlightedDate>
+            {
+                new HighlightedDate(DateTime.Today.AddDays(3), "Beschreibung"),
+                new HighlightedDate(DateTime.Today.AddDays(20), "Geburtstag")
+            };
+
             Save = new DelegateCommand(SaveData, CanSave)
                 .ObservesProperty(() => HasChanges);
 
@@ -38,6 +45,12 @@ namespace DashboardWpf.Modules.TKB.ViewModels
             set => SetProperty(ref _hasChanges, value);
         }
 
+        private IList<HighlightedDate> _highlightedDates;
+        public IList<HighlightedDate> HighlightedDates
+        {
+            get => _highlightedDates;
+            set => SetProperty(ref _highlightedDates, value);
+        }
 
         private ObservableCollection<Tour> _tours;
 
