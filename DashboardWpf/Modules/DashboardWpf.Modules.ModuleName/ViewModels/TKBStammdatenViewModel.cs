@@ -1,6 +1,7 @@
 ﻿using DashboardWpf.Core.Models;
 using DashboardWpf.Core.Views;
 using DashboardWpf.Services.Interfaces;
+using DashboardWpf.UserControls.HighlightDatePicker;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;

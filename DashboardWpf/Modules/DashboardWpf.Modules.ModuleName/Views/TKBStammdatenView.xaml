@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:core="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:DashboardWpf.Core.Views;assembly=DashboardWpf.Core"
+             xmlns:ucDate="clr-namespace:DashboardWpf.UserControls.HighlightDatePicker;assembly=DashboardWpf.UserControls"
              xmlns:uc="clr-namespace:DashboardWpf.UserControls.Views;assembly=DashboardWpf.UserControls"
+             xmlns:converters="clr-namespace:DashboardWpf.UserControls.HighlightDatePicker.Converters;assembly=DashboardWpf.UserControls"
              xmlns:ig="http://schemas.infragistics.com/xaml"
              xmlns:igEditors="http://infragistics.com/Editors"
              xmlns:prism="http://prismlibrary.com/"    
@@ -14,6 +16,41 @@
         <ItemsPanelTemplate x:Key="ItemsTemplate">
             <VirtualizingStackPanel/>
         </ItemsPanelTemplate>
+        
+        <!-- DatePicker Resources  -->
+        <converters:DateIsInListConverter x:Key="DateIsInListConverter" />
+        <converters:HighlightedDateDescriptionConverter x:Key="HighlightedDateDescriptionConverter" />
+
+        <Style x:Key="CustomCalendarDayButtonStyle" TargetType="{x:Type CalendarDayButton}" BasedOn="{StaticResource {x:Type CalendarDayButton}}">
+
+            <Style.Triggers>
+                <DataTrigger Value="True">
+                    <DataTrigger.Binding>
+                        <MultiBinding Converter="{StaticResource DateIsInListConverter}">
+                            <Binding />
+                            <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType=ucDate:HighlightDatePicker}" Path="HighlightedDates" />
+                        </MultiBinding>
+                    </DataTrigger.Binding>
+                    <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ucDate:HighlightDatePicker}, Path=HighlightBrush}" />
+                    <Setter Property="ToolTip">
+                        <Setter.Value>
+                            <MultiBinding Converter="{StaticResource HighlightedDateDescriptionConverter}">
+                                <Binding />
+                                <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType=ucDate:HighlightDatePicker}" Path="HighlightedDates" />
+                            </MultiBinding>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="CustomCalendarStyle" TargetType="{x:Type Calendar}" BasedOn="{StaticResource {x:Type Calendar}}">
+            <Setter Property="CalendarDayButtonStyle" Value="{StaticResource CustomCalendarDayButtonStyle}" />
+        </Style>
+
+        <Style TargetType="ucDate:HighlightDatePicker" BasedOn="{StaticResource {x:Type DatePicker}}">
+            <Setter Property="CalendarStyle" Value="{StaticResource CustomCalendarStyle}" />
+        </Style>
     </UserControl.Resources>
 
     <Grid Background="LightBlue">
@@ -25,11 +62,12 @@
 
         <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="5" DockPanel.Dock="Top">
             <TextBlock Text="Gultig ab:" Margin="2, 3, 5, 0" />
-            <DatePicker x:Name="dateFrom" SelectedDate="{Binding SelectedDate}" />
-            <!--<local:HighlightDatePicker x:Name="dateFrom" 
-                                       SelectedDate="{Binding SelectedDate}" 
+            <!--<DatePicker x:Name="dateFrom" SelectedDate="{Binding SelectedDate}" />-->
+
+            <ucDate:HighlightDatePicker x:Name="dateFrom" 
+                                       SelectedDate="{Binding SelectedDate}"
                                        HighlightedDates="{Binding HighlightedDates}"
-                                       HighlightBrush="Red" />-->
+                                       HighlightBrush="LawnGreen" />
         </StackPanel>
                     
         <!--  Parent DataGrid - Tours -->

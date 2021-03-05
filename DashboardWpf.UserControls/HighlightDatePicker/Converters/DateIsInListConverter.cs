@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Windows.Data;
 
-namespace DashboardWpf.Core.Views
+namespace DashboardWpf.UserControls.HighlightDatePicker.Converters
 {
-    /// <summary>
-    /// Helper class to check DateTime value into the specified list 
-    /// </summary>
-    public class DateIsInListConverter: IMultiValueConverter
+    public class DateIsInListConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
