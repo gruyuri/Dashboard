@@ -11,26 +11,14 @@ namespace DashboardWpf.Services
         {
             IList<ModuleUI> list = new List<ModuleUI>();
 
-            list.Add(new ModuleUI()
-            {
-                DisplayName = "TKB",
-                Items = new List<ModuleUI>()
+            ModuleUI moduleUI = new ModuleUI("TKB", string.Empty, MaterialDesignThemes.Wpf.PackIconKind.Schedule);
+            moduleUI.Items = new List<ModuleUI>()
                 {
-                    new ModuleUI() { DisplayName = "Tour-Stammdaten", ModuleName = ModuleNames.TKB_TOUR_STAMMDATEN },
-                    new ModuleUI() { DisplayName = "Tour-Disposition", ModuleName = ModuleNames.TKB_DISPOSITION_VIEW }
-                }
-            });
+                    new ModuleUI("Tour-Stammdaten", ModuleNames.TKB_TOUR_STAMMDATEN, MaterialDesignThemes.Wpf.PackIconKind.None),
+                    new ModuleUI("Tour-Disposition", ModuleNames.TKB_DISPOSITION_VIEW, MaterialDesignThemes.Wpf.PackIconKind.NoteAddOutline)
+                };
 
-            //list.Add(new ModuleUI()
-            //{
-            //    DisplayName = "Module A",
-            //    Items = new List<ModuleUI>()
-            //    {
-            //        new ModuleUI() { DisplayName = "Module A - SubItem 01" },
-            //        new ModuleUI() { DisplayName = "Module A - SubItem 02" },
-            //        new ModuleUI() { DisplayName = "Module A - SubItem 03" }
-            //    }
-            //});
+            list.Add(moduleUI);
 
             return list;
         }

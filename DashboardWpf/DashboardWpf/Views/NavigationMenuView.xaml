@@ -3,8 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:core="clr-namespace:DashboardWpf.Core;assembly=DashboardWpf.Core"
              xmlns:model="clr-namespace:DashboardWpf.Core.Models;assembly=DashboardWpf.Core"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True">
+    
     <Grid x:Name="sidePanel" Background="#FF002355" HorizontalAlignment="Left">
         <TreeView ItemsSource="{Binding ModuleItems}" 
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
@@ -21,9 +23,13 @@
             <TreeView.Resources>
                 <HierarchicalDataTemplate DataType="{x:Type model:ModuleUI}" ItemsSource="{Binding Path=Items}"
                                           >
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="{Binding Path=Icon}" Width="15" Height="15" Margin="3" Foreground="White"/>
                         <TextBlock Text="{Binding Path=DisplayName}" Foreground="White"/>
+                    </StackPanel>
                 </HierarchicalDataTemplate>
             </TreeView.Resources>
         </TreeView>
+
     </Grid>
 </UserControl>
