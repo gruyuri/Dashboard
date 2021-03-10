@@ -158,5 +158,37 @@ namespace DashboardWpf.Services
             return result.OrderBy(x => x.IsDummy)
                 .ThenBy(x => x.Name).ToList();
         }
+
+        public IList<Depot> GetAllDepot()
+        {
+            return DemoDepots();
+        }
+
+        private List<Depot> DemoDepots()
+        {
+            var result = new List<Depot>();
+
+            result.Add(new Depot() { Name = "Zehlendorf", Code = "01" });
+            result.Add(new Depot() { Name = "Steglitz", Code = "02" });
+            result.Add(new Depot() { Name = "Wilmersdorf", Code = "03" });
+            result.Add(new Depot() { Name = "Spandau", Code = "04" });
+            result.Add(new Depot() { Name = "Charlottenburg", Code = "05" });
+            result.Add(new Depot() { Name = "Schöneberg", Code = "06" });
+            result.Add(new Depot() { Name = "Tempelhof", Code = "07" });
+            result.Add(new Depot() { Name = "City", Code = "08" });
+            result.Add(new Depot() { Name = "Rudow", Code = "09" });
+            result.Add(new Depot() { Name = "Pin Mail", Code = "10" });
+            result.Add(new Depot() { Name = "Neukölln", Code = "11" });
+            result.Add(new Depot() { Name = "Wedding", Code = "12" });
+            result.Add(new Depot() { Name = "Reinickendorf", Code = "13" });
+            result.Add(new Depot() { Name = "Lichtenberg", Code = "14" });
+            result.Add(new Depot() { Name = "Prenzlauer Berg", Code = "15" });
+            result.Add(new Depot() { Name = "Weißensee", Code = "16" });
+            result.Add(new Depot() { Name = "Köpenick", Code = "17" });
+            result.Add(new Depot() { Name = "Marzahn-Hellersdorf", Code = "18" });
+
+            return result.OrderBy(x => x.Name)
+                .ToList();
+        }
     }
 }

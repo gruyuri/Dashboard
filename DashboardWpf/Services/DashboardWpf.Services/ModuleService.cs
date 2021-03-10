@@ -11,6 +11,10 @@ namespace DashboardWpf.Services
         {
             IList<ModuleUI> list = new List<ModuleUI>();
 
+            ModuleUI moduleDashboard = new ModuleUI("Dashboard", string.Empty, MaterialDesignThemes.Wpf.PackIconKind.TabletDashboard);
+            list.Add(moduleDashboard);
+
+
             ModuleUI moduleUI = new ModuleUI("TKB", string.Empty, MaterialDesignThemes.Wpf.PackIconKind.Schedule);
             moduleUI.Items = new List<ModuleUI>()
                 {

@@ -10,5 +10,7 @@ namespace DashboardWpf.Services.Interfaces
         public IList<Tour> GetDepoTours(string depoCode, DateTime date);
 
         public IList<Employee> GetDepoEmployees(string depoCode);
+
+        public IList<Depot> GetAllDepot();
     }
 }

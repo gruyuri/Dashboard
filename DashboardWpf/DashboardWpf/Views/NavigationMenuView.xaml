@@ -6,13 +6,17 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True">
-    
+
+    <!--Background="Transparent"
+    BorderBrush="Transparent" 
+    -->
     <Grid x:Name="sidePanel" Background="#FF002355" HorizontalAlignment="Left">
         <TreeView ItemsSource="{Binding ModuleItems}" 
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                   FontFamily="Century Gothic" 
-                  FontSize="14" Foreground="White" BorderBrush="Transparent" 
-                  Background="Transparent" FontWeight="Bold"
+                  FontSize="20" Foreground="White" BorderBrush="Transparent"
+                  Background="#FF002355"
+                  FontWeight="Bold"
                   SelectedItemChanged="OnSelectedItemChanged"
                   >
             <TreeView.ItemContainerStyle>
@@ -21,11 +25,16 @@
                 </Style>
             </TreeView.ItemContainerStyle>
             <TreeView.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}"
+                     Color="{DynamicResource {x:Static SystemColors.HighlightColorKey}}" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}"
+                     Color="{DynamicResource {x:Static SystemColors.HighlightTextColorKey}}"/>
+                
                 <HierarchicalDataTemplate DataType="{x:Type model:ModuleUI}" ItemsSource="{Binding Path=Items}"
                                           >
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="{Binding Path=Icon}" Width="15" Height="15" Margin="3" Foreground="White"/>
-                        <TextBlock Text="{Binding Path=DisplayName}" Foreground="White"/>
+                        <TextBlock Text="{Binding Path=DisplayName}" Foreground="White" Margin="0 0 5 0"/>
                     </StackPanel>
                 </HierarchicalDataTemplate>
             </TreeView.Resources>
