@@ -10,17 +10,28 @@ namespace DashboardWpf.Services
 {
     public class DepotService : IDepotService
     {
+        private Dictionary<string, List<Employee>> cacheEmployee = new Dictionary<string, List<Employee>>();
+
         public IList<Employee> GetDepoEmployees(string depoCode)
         {
-            return DemoEmployees(depoCode);
+            if (String.IsNullOrEmpty(depoCode))
+                return new List<Employee>();
+
+            if (!cacheEmployee.ContainsKey(depoCode))
+            {
+                var generatedEmployee = DemoEmployees(depoCode);
+                cacheEmployee[depoCode] = generatedEmployee;
+            }
+            
+            return cacheEmployee[depoCode];
         }
 
         public IList<Tour> GetDepoTours(string depoCode, DateTime date)
         {
             var result = new List<Tour>();
-            var employees = DemoEmployees(depoCode).ToArray();
+            var employees = GetDepoEmployees(depoCode).ToArray();
 
-            if (date.DayOfWeek == DayOfWeek.Sunday)
+            if (date.DayOfWeek == DayOfWeek.Sunday || string.IsNullOrEmpty(depoCode))
                 return result;
 
             Tour komplettTour1 = new Tour()
@@ -142,21 +153,61 @@ namespace DashboardWpf.Services
             return result;
         }
 
-        private List<Employee> DemoEmployees(string depoCode)
+        private List<Employee> DemoEmployees(string depoCode, int n = 30)
         {
             var result = new List<Employee>();
 
-            result.Add(new Employee() { Name = "NN", Code = "", IsDummy = true });
-            result.Add(new Employee() { Name = $"Zusteller {depoCode}", Code = $"{depoCode}103554", IsAvailableForSubstitution = true });
-            result.Add(new Employee() { Name = "Abraham Brams", Code = $"{depoCode}152372", IsAvailableForSubstitution = true });
-            result.Add(new Employee() { Name = "Brigitta Kraft", Code = $"{depoCode}107964", IsAvailableForSubstitution = true });
-            result.Add(new Employee() { Name = "Daniel Hacket", Code = $"{depoCode}457215", IsAvailableForSubstitution = false });
-            result.Add(new Employee() { Name = "Margarett Mitchell", Code = $"{depoCode}035681", IsAvailableForSubstitution = true });
-            result.Add(new Employee() { Name = "Lucia Freiburg", Code = $"{depoCode}134516", IsAvailableForSubstitution = true });
-            result.Add(new Employee() { Name = "Samuel Edwards", Code = $"{depoCode}123517", IsAvailableForSubstitution = false });
+            result.Add(new Employee() { FirstName = "NN", Code = "", IsDummy = true });
+            result.Add(new Employee() { FirstName = $"Zusteller {depoCode}", Code = $"{depoCode}103554", IsAvailableForSubstitution = true });
+
+            for (int i = 0; i < n; i++)
+            {
+                var employee = new Employee()
+                {
+                    FirstName = GetRandomItem(firstNames),
+                    LastName = GetRandomItem(lastNames),
+                    Code = $"{depoCode}{(new Random()).Next(100000, 999999)}",
+                    IsAvailableForSubstitution = (i % 3 == 0)
+                };
+
+                result.Add(employee);
+            }
+            //result.Add(new Employee() { Name = "Brigitta Kraft", Code = $"{depoCode}107964", IsAvailableForSubstitution = true });
+            //result.Add(new Employee() { Name = "Daniel Hacket", Code = $"{depoCode}457215", IsAvailableForSubstitution = false });
+            //result.Add(new Employee() { Name = "Margarett Mitchell", Code = $"{depoCode}035681", IsAvailableForSubstitution = true });
+            //result.Add(new Employee() { Name = "Lucia Freiburg", Code = $"{depoCode}134516", IsAvailableForSubstitution = true });
+            //result.Add(new Employee() { Name = "Samuel Edwards", Code = $"{depoCode}123517", IsAvailableForSubstitution = false });
 
             return result.OrderBy(x => x.IsDummy)
-                .ThenBy(x => x.Name).ToList();
+                .ThenBy(x => x.LastName)
+                .ThenBy(x => x.FirstName).ToList();
+        }
+
+        private string[] firstNames = new string[]
+        {
+            "Klaus-Dieter", "Justus", "Morten", "Frauke", "Frank", "Livia", "Maximilian", "Konrad", "Gerhard",
+            "Michael", "Michaela", "Friederike", "Reiner", "Jochen", "Julia", "Lale", "Veronika", "Oliver", "Volker",
+            "David", "Katja", "Jan", "Jürgen", "Sabine", "Jennifer", "Johanna", "Antje", "Christiane", "Bettine",
+            "Winand", "Johannes", "Rainer", "Ralf", "Marcus", "Patrick", "Sebastian", "Lucas", "Leon", "Luka",
+            "Finn", "Tobias", "Jonas", "Ben", "Elias", "Emma", "Anna", "Lena", "Julia", "Lea", "Hannah", "Laura", "Mia",
+            "Karl", "Stefan", "Walter", "Gregor", "Uwe", "Hans", "Klaus", "Günter", "Ursula", "Christina", "Ilse",
+            "Ingrid", "Petra", "Monika", "Gisela", "Susanne", "Horst", "Roman", "Silke"
+        };
+
+        private string[] lastNames = new string[]
+        {
+            "Frankenberger", "Bender", "Freidel", "Steffens", "Pergande", "Gerster", "Lachner", "Schuller", "Gnauk",
+            "Martens", "Wiegel", "Haupt", "Burger", "Buchsteiner", "Schaaf", "Artun", "Grimm", "Bäte", "Looman",
+            "Kampmann", "Gelinksy", "Bazing", "Dollase", "Spieler", "Wiebking", "Kalbitzer", "Dürrholz", "Biehler",
+            "Heil", "Weiguny", "von Petersdorf", "Pennekamp", "Hank", "Bollmann", "Theurer", "Bernau", "Baltzter",
+            "Bauchmüller", "Braun", "Deininger", "Kippes", "Lowitz", "Hansen", "Bauer", "Özkök", "Wagner", "Winkler",
+            "Niemayer", "Unterstöger"
+        };
+
+        private string GetRandomItem(IList<string> items)
+        {
+            int idx = (new Random()).Next(0, items.Count);
+            return items[idx];
         }
 
         public IList<Depot> GetAllDepot()

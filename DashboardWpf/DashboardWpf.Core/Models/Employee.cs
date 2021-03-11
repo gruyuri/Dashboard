@@ -9,7 +9,9 @@ namespace DashboardWpf.Core.Models
     {
         public string Code { get; set; }
 
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
 
         public bool IsAvailableForSubstitution { get; set; } = false;
 
@@ -17,6 +19,8 @@ namespace DashboardWpf.Core.Models
         /// Sign of system record, to assign Empty Status
         /// </summary>
         public bool IsDummy { get; set; } = false;
+
+        public string Name => $"{FirstName} {LastName}";
 
         public override string ToString() => $"{Name} {Code}";
 
