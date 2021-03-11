@@ -11,5 +11,7 @@ namespace DashboardWpf.Core.Models
         public string Name { get; set; }
 
         public override string ToString() => $"{Code}: {Name}";
+
+        public string DisplayName => $"{Name.ToUpper()}";
     }
 }

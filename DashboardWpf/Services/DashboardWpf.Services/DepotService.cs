@@ -12,13 +12,13 @@ namespace DashboardWpf.Services
     {
         public IList<Employee> GetDepoEmployees(string depoCode)
         {
-            return DemoEmployees();
+            return DemoEmployees(depoCode);
         }
 
         public IList<Tour> GetDepoTours(string depoCode, DateTime date)
         {
             var result = new List<Tour>();
-            var employees = DemoEmployees().ToArray();
+            var employees = DemoEmployees(depoCode).ToArray();
 
             if (date.DayOfWeek == DayOfWeek.Sunday)
                 return result;
@@ -142,18 +142,18 @@ namespace DashboardWpf.Services
             return result;
         }
 
-        private List<Employee> DemoEmployees()
+        private List<Employee> DemoEmployees(string depoCode)
         {
             var result = new List<Employee>();
 
             result.Add(new Employee() { Name = "NN", Code = "", IsDummy = true });
-            result.Add(new Employee() { Name = "Zusteller A", Code = "02103554", IsAvailableForSubstitution = true });
-            result.Add(new Employee() { Name = "Abraham Brams", Code = "99152372", IsAvailableForSubstitution = true });
-            result.Add(new Employee() { Name = "Brigitta Kraft", Code = "00107964", IsAvailableForSubstitution = true });
-            result.Add(new Employee() { Name = "Daniel Hacket", Code = "03457215", IsAvailableForSubstitution = false });
-            result.Add(new Employee() { Name = "Margarett Mitchell", Code = "01035681", IsAvailableForSubstitution = true });
-            result.Add(new Employee() { Name = "Lucia Freiburg", Code = "02134516", IsAvailableForSubstitution = true });
-            result.Add(new Employee() { Name = "Samuel Edwards", Code = "98123517", IsAvailableForSubstitution = false });
+            result.Add(new Employee() { Name = $"Zusteller {depoCode}", Code = $"{depoCode}103554", IsAvailableForSubstitution = true });
+            result.Add(new Employee() { Name = "Abraham Brams", Code = $"{depoCode}152372", IsAvailableForSubstitution = true });
+            result.Add(new Employee() { Name = "Brigitta Kraft", Code = $"{depoCode}107964", IsAvailableForSubstitution = true });
+            result.Add(new Employee() { Name = "Daniel Hacket", Code = $"{depoCode}457215", IsAvailableForSubstitution = false });
+            result.Add(new Employee() { Name = "Margarett Mitchell", Code = $"{depoCode}035681", IsAvailableForSubstitution = true });
+            result.Add(new Employee() { Name = "Lucia Freiburg", Code = $"{depoCode}134516", IsAvailableForSubstitution = true });
+            result.Add(new Employee() { Name = "Samuel Edwards", Code = $"{depoCode}123517", IsAvailableForSubstitution = false });
 
             return result.OrderBy(x => x.IsDummy)
                 .ThenBy(x => x.Name).ToList();

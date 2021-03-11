@@ -1,9 +1,13 @@
-﻿using DashboardWpf.Core.Models;
+﻿using DashboardWpf.Core;
+using DashboardWpf.Core.Events;
+using DashboardWpf.Core.Models;
 using DashboardWpf.Core.Views;
 using DashboardWpf.Services.Interfaces;
 using DashboardWpf.UserControls.HighlightDatePicker;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
+using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,16 +17,19 @@ using System.Windows.Input;
 
 namespace DashboardWpf.Modules.TKB.ViewModels
 {
-    public class TKBStammdatenViewModel : BindableBase
+    public class TKBStammdatenViewModel : BindableBase, INavigationAware
     {
         private IDepotService dataService;
-        public TKBStammdatenViewModel(IDepotService depoService)
+        private IEventAggregator _eventAggregator;
+
+        public TKBStammdatenViewModel(IDepotService depoService, IEventAggregator eventAggregator)
         {
             dataService = depoService;
+            _eventAggregator = eventAggregator;
 
-            ReloadTours();
+            eventAggregator.GetEvent<DepotSelected>().Subscribe(OnDepotSelected);
 
-            Employees = new ObservableCollection<Employee>(dataService.GetDepoEmployees(string.Empty));
+            ReloadData();
 
             HighlightedDates = new List<HighlightedDate>
             {
@@ -36,6 +43,20 @@ namespace DashboardWpf.Modules.TKB.ViewModels
             Cancel = new DelegateCommand(RollbackChanges, CanCancel)
                 .ObservesProperty(() => HasChanges);
 
+        }
+
+        private void ReloadData()
+        {
+            ReloadTours();
+
+            Employees = new ObservableCollection<Employee>(dataService.GetDepoEmployees(MainDepot?.Code));
+        }
+
+        private void OnDepotSelected(Depot depot)
+        {
+            MainDepot = depot;
+
+            ReloadData();
         }
 
         private bool _hasChanges;
@@ -128,7 +149,35 @@ namespace DashboardWpf.Modules.TKB.ViewModels
 
         private void ReloadTours()
         {
-            Tours = new ObservableCollection<Tour>(dataService.GetDepoTours(string.Empty, SelectedDate));
+            Tours = new ObservableCollection<Tour>(dataService.GetDepoTours(MainDepot?.Code, SelectedDate));
+        }
+
+        #region  INavigationAware
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            MainDepot = navigationContext.Parameters.GetValue<Depot>(NavigationParameterNames.DEPOT);
+            ReloadData();
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            
+        }
+
+        #endregion
+
+        private Depot _mainDepot;
+
+        public Depot MainDepot
+        {
+            get => _mainDepot;
+            set => SetProperty(ref _mainDepot, value);
         }
 
     }
