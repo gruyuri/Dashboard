@@ -13,11 +13,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 
 namespace DashboardWpf.Modules.TKB.ViewModels
 {
-    public class TKBStammdatenViewModel : BindableBase, INavigationAware
+    public class TKBStammdatenViewModel : BindableBase, INavigationAware, IConfirmNavigationRequest
     {
         private IDepotService dataService;
         private IEventAggregator _eventAggregator;
@@ -31,11 +32,7 @@ namespace DashboardWpf.Modules.TKB.ViewModels
 
             ReloadData();
 
-            HighlightedDates = new List<HighlightedDate>
-            {
-                new HighlightedDate(DateTime.Today.AddDays(3), "Beschreibung"),
-                new HighlightedDate(DateTime.Today.AddDays(20), "Geburtstag")
-            };
+
 
             Save = new DelegateCommand(SaveData, CanSave)
                 .ObservesProperty(() => HasChanges);
@@ -50,6 +47,10 @@ namespace DashboardWpf.Modules.TKB.ViewModels
             ReloadTours();
 
             Employees = new ObservableCollection<Employee>(dataService.GetDepoEmployees(MainDepot?.Code));
+
+            HighlightedDates = dataService.GetTourDates(MainDepot?.Code)
+                .Select(x => new HighlightedDate(x, "Reserved Tour"))
+                .ToList();
         }
 
         private void OnDepotSelected(Depot depot)
@@ -115,7 +116,7 @@ namespace DashboardWpf.Modules.TKB.ViewModels
         /// </summary>
         private void SaveData()
         {
-
+            //HasChanges = false;
         }
 
         /// <summary>
@@ -142,6 +143,12 @@ namespace DashboardWpf.Modules.TKB.ViewModels
             get => _selectedDate;
             set 
             { 
+                if (HasChanges && _selectedDate != value)
+                {
+                    var saveConfirm = SaveDataDialog;
+                    if (saveConfirm == MessageBoxResult.Yes || saveConfirm == MessageBoxResult.OK)
+                        SaveData();
+                }
                 SetProperty(ref _selectedDate, value);
                 ReloadTours();
             }
@@ -150,6 +157,7 @@ namespace DashboardWpf.Modules.TKB.ViewModels
         private void ReloadTours()
         {
             Tours = new ObservableCollection<Tour>(dataService.GetDepoTours(MainDepot?.Code, SelectedDate));
+            HasChanges = false;
         }
 
         #region  INavigationAware
@@ -167,17 +175,60 @@ namespace DashboardWpf.Modules.TKB.ViewModels
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            
+
         }
 
         #endregion
 
+        private MessageBoxResult SaveDataDialog =>
+            MessageBox.Show("Möchten Sie Ihre Datei speichern?", "Speichern", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+
+        #region IConfirmNavigationRequest
+
+        public void ConfirmNavigationRequest(NavigationContext navigationContext, Action<bool> continuationCallback)
+        {
+            bool result = true;
+
+            if (HasChanges)
+            {
+                var confirm = SaveDataDialog;
+                switch (confirm)
+                {
+                    case MessageBoxResult.Cancel:
+                        result = false; break;
+
+                    case MessageBoxResult.OK:
+                    case MessageBoxResult.Yes:
+                        SaveData(); break;
+
+                    case MessageBoxResult.No:
+                        ReloadData(); break;
+                }
+            }
+
+            continuationCallback(result);
+        }
+
+        #endregion
+        
+        
         private Depot _mainDepot;
 
         public Depot MainDepot
         {
             get => _mainDepot;
-            set => SetProperty(ref _mainDepot, value);
+            set 
+            {
+                if (HasChanges && _mainDepot != value)
+                {
+                    var saveConfirm = SaveDataDialog;
+                    if (saveConfirm == MessageBoxResult.Yes || saveConfirm == MessageBoxResult.OK)
+                        SaveData();
+                }
+
+                SetProperty(ref _mainDepot, value);
+
+            }
         }
 
     }

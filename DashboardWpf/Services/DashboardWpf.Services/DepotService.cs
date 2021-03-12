@@ -12,6 +12,26 @@ namespace DashboardWpf.Services
     {
         private Dictionary<string, List<Employee>> cacheEmployee = new Dictionary<string, List<Employee>>();
 
+        public IList<DateTime> GetTourDates(string depoCode)
+        {
+            var result = new List<DateTime>();
+
+            if (string.IsNullOrEmpty(depoCode))
+                return result;
+
+            var today = DateTime.Today;
+            var nextMonday = today.AddDays(1);
+
+            while (nextMonday.DayOfWeek != DayOfWeek.Monday)
+                nextMonday = nextMonday.AddDays(1);
+
+            result.AddRange(new DateTime[] { today, nextMonday, 
+                nextMonday.AddDays(7), nextMonday.AddDays(10), 
+                nextMonday.AddDays(15), nextMonday.AddDays(19) });
+
+            return result;
+        }
+
         public IList<Employee> GetDepoEmployees(string depoCode)
         {
             if (String.IsNullOrEmpty(depoCode))
@@ -31,7 +51,12 @@ namespace DashboardWpf.Services
             var result = new List<Tour>();
             var employees = GetDepoEmployees(depoCode).ToArray();
 
-            if (date.DayOfWeek == DayOfWeek.Sunday || string.IsNullOrEmpty(depoCode))
+            if (string.IsNullOrEmpty(depoCode))
+                return result;
+
+            var reservedDates = GetTourDates(depoCode);
+
+            if (!reservedDates.Contains(date))
                 return result;
 
             Tour komplettTour1 = new Tour()
@@ -52,7 +77,7 @@ namespace DashboardWpf.Services
 
             Tour komplettTour2 = new Tour()
             {
-                Date = date,
+                Date = date.AddDays(7),
                 Name = "002",
                 FactH = 8,
                 PlanH = 8,
@@ -86,7 +111,7 @@ namespace DashboardWpf.Services
 
             Tour leerTour2 = new Tour()
             {
-                Date = date,
+                Date = date.AddDays(10),
                 Name = "005",
                 FactH = 0,
                 PlanH = 8,
@@ -120,7 +145,7 @@ namespace DashboardWpf.Services
 
             Tour mixTour2 = new Tour()
             {
-                Date = date,
+                Date = date.AddDays(14),
                 Name = "006",
                 FactH = 3,
                 PlanH = 8,

@@ -7,10 +7,12 @@ namespace DashboardWpf.Services.Interfaces
 {
     public interface IDepotService
     {
-        public IList<Tour> GetDepoTours(string depoCode, DateTime date);
+        IList<Tour> GetDepoTours(string depoCode, DateTime date);
 
-        public IList<Employee> GetDepoEmployees(string depoCode);
+        IList<Employee> GetDepoEmployees(string depoCode);
 
-        public IList<Depot> GetAllDepot();
+        IList<Depot> GetAllDepot();
+
+        IList<DateTime> GetTourDates(string depoCode);
     }
 }
