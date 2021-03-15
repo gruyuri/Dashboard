@@ -79,7 +79,6 @@ CREATE TABLE tourassignment
 		
 		tour_id BIGINT NULL,
 		validfrom TIMESTAMP(6) WITHOUT TIME ZONE NULL,
-		actualdate TIMESTAMP(6) WITHOUT TIME ZONE NULL,
 		employee_id BIGINT NULL,
 		fact_h INT NULL,
 		plan_h INT NULL,
@@ -97,8 +96,6 @@ CREATE TABLE tourfachassignment
 		tourassignment_id BIGINT NOT NULL,
 		fach_id BIGINT NOT NULL,
 		employee_id BIGINT NULL,
-		iscancelled BOOLEAN DEFAULT false NOT NULL,
-		issplitted BOOLEAN DEFAULT false NOT NULL,
 
 		PRIMARY KEY (id),
         CONSTRAINT fk_tourfachassignment_tourassignment FOREIGN KEY (tourassignment_id) REFERENCES tourassignment (id),

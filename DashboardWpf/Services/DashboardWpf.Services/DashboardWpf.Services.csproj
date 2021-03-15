@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\DashboardWpf.DataAccess\DashboardWpf.DataAccess.csproj" />
     <ProjectReference Include="..\..\DashboardWpf.Core\DashboardWpf.Core.csproj" />
     <ProjectReference Include="..\DashboardWpf.Services.Interfaces\DashboardWpf.Services.Interfaces.csproj" />
   </ItemGroup>

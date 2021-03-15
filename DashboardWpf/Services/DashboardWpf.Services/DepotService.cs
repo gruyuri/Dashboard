@@ -1,4 +1,5 @@
 ﻿using DashboardWpf.Core.Models;
+using DashboardWpf.DataAccess;
 using DashboardWpf.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -237,7 +238,18 @@ namespace DashboardWpf.Services
 
         public IList<Depot> GetAllDepot()
         {
-            return DemoDepots();
+            using (var p = new Persistenz())
+            {
+                var depoList = p.Session.CreateQuery("FROM Depot")
+                        .List<DashboardWpf.DataAccess.Models.Depot>();
+
+                IList<Depot> result = depoList.Select(x => new Depot() { Code = x.Code, Name = x.Name }).ToList();
+                
+                return result.OrderBy(x => x.Name)
+                    .ToList();
+            }
+
+            //return DemoDepots();
         }
 
         private List<Depot> DemoDepots()
